@@ -633,6 +633,9 @@ $("input[type=file]").change(function () {
 
 //관리자일 경우 control button 보여주기
 $(window).ready(function () {
+	if (localStorage.getItem('modakbul_token') == null){
+      	return;
+   	}
 	let a_jax = A_JAX(TEST_IP+"get_userinfo", "GET",  null, null);
 	$.when(a_jax).done(function(){
 		var json = a_jax.responseJSON;
