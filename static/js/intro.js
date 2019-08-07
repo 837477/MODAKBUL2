@@ -4,6 +4,9 @@ $(document).ready(()=>{
         $('.main_intro').append(ajax.responseJSON.value);
     });
 
+    if (localStorage.getItem('modakbul_token') != null) {
+        get_user_info();
+    }
     let intro_ajax = A_JAX(TEST_IP+'get_department/0', 'GET', null, null);
     $.when(intro_ajax).done(()=>{
         for (let i=0; i<intro_ajax.responseJSON.department.length; i++) {
@@ -44,7 +47,6 @@ $(document).ready(()=>{
     $.when(contacts_ajax).done(function(){
         let contacts_json = contacts_ajax.responseJSON;
         if (contacts_json['result'] == 'success'){
-            console.log(contacts_json);
             $('#M_contacts').append(contacts_json['value']);    
         } else {
             snackbar("일시적인 오류로 정보를 불러오지 못하였습니다.");
