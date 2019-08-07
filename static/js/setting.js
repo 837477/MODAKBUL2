@@ -1,5 +1,6 @@
 const DEPARTMENTS = ['데이터사이언스학과', '디자인이노베이션', '디지털콘텐츠학과', '만화애니메이션텍', '소프트웨어학과', '정보보호학과', '지능기전공학부', '창의소프트학부', '컴퓨터공학과'];
 let bio_cnt = 0;
+let search_user_info_ajax_list;
 $(document).ready(()=>{
    let ajax = A_JAX(TEST_IP+'get_variables', "GET", null, null);
    $.when(ajax).done(()=>{
@@ -143,7 +144,34 @@ $(document).ready(()=>{
         bio_cnt = intro_ajax2.responseJSON.department[intro_ajax2.responseJSON.department.length - 1].dm_id + 1;
         change_setting_theme();
     });
-
+    let user_list_html_ajax = A_JAX(TEST_IP+'get_user_list', "GET", null, null);
+    $.when(user_list_html_ajax).done(function(){
+        let user_list_html_json = user_list_html_ajax.responseJSON;
+        if (user_list_html_json['result'] == 'success'){
+            let user_list_html = '';
+            search_user_info_ajax_list = user_list_html_json['user_list'];
+            for (let i = 0; i < search_user_info_ajax_list.length; i++){
+                let major = '';
+                for (let j=0; j<DEPARTMENTS.length; j++){
+                    if (user_list_html_json['user_list'][i]['user_tags'].indexOf(DEPARTMENTS[j]) !== -1) {
+                        major = DEPARTMENTS[j];
+                        break;
+                    }
+                }
+                user_list_html +=
+                    '<div class="M_user_info_container" alt_id="'+user_list_html_json['user_list'][i]['user_id']+'" alt_name="'+user_list_html_json['user_list'][i]['user_name']+'"">'+
+                    '<div style="background-color: ' +  user_list_html_json['user_list'][i]['user_color'] + '" class="M_setting_user_tag"></div>'+
+                    '<div class="M_setting_subtitle_name">'+
+                    ' ' + user_list_html_json['user_list'][i]['user_name'] + ' ' + user_list_html_json['user_list'][i]['user_id'] + ' '+ major +
+                    '</div>'+
+                    '<div onclick="black_user($(this).parent())" class = "M_setting_black_button"> 블랙</div></div>';
+            }
+            $('#M_user_info').empty();
+            $('#M_user_info').append(user_list_html);
+        } else {
+            snackbar("유저정보를 불러오지 못하였습니다.");
+        }
+    }); 
 });
 
 function black_list() {
@@ -465,6 +493,11 @@ function submit_bio() {
         img_data.append('img', image[0]);
         let img_ajax = A_JAX_FILE(TEST_IP+'change_logo', 'POST', localStorage.getItem('modakbul_token'), img_data);
         $.when(img_ajax).done(()=>{
+            if (img_ajax.responseJSON['result'] == 'success'){
+                snackbar("성공적으로 업로드하였습니다.");
+            } else {
+                snackbar("일시적인 오류로 업로드를 실패하였습니다.");
+            }
             location.reload();
         })
     }
@@ -477,6 +510,11 @@ function submit_bio() {
         $.when(name_ajax).done(()=>{
             div.val('');
             div.attr('placeholder', new_name);
+            if (name_ajax.responseJSON['result'] == 'success'){
+                snackbar("성공적으로 업로드하였습니다.");
+            } else {
+                snackbar("일시적인 오류로 업로드를 실패하였습니다.");
+            }
         });
         snackbar('적용되었습니다.');
     }
@@ -489,6 +527,11 @@ function submit_bio() {
         $.when(subtitle_ajax).done(()=>{
             div.val('');
             div.attr('placeholder', new_subtitle);
+            if (subtitle_ajax.responseJSON['result'] == 'success'){
+                snackbar("성공적으로 업로드하였습니다.");
+            } else {
+                snackbar("일시적인 오류로 업로드를 실패하였습니다.");
+            }
         });
         snackbar('적용되었습니다.');
     }
@@ -504,8 +547,12 @@ function submit_bio() {
         $.when(main_bio_ajax).done(()=>{
             $('#M_union_info_wrapper_introduce_textarea').val('');
             $('#M_union_info_wrapper_introduce_textarea').attr('placeholder', tmp);
+            if (main_bio_ajax.responseJSON['result'] == 'success'){
+                snackbar("성공적으로 업로드하였습니다.");
+            } else {
+                snackbar("일시적인 오류로 업로드를 실패하였습니다.");
+            }
         });
-        snackbar('적용되었습니다.');
     }
     if (contacts_updated === true)
     {
@@ -519,8 +566,12 @@ function submit_bio() {
         $.when(contacts_ajax).done(()=> {
             $('#M_union_info_wrapper_phonenumber_textarea').val('');
             $('#M_union_info_wrapper_phonenumber_textarea').attr('placeholder', tmp);
+            if (contacts_ajax.responseJSON['result'] == 'success'){
+                snackbar("성공적으로 업로드하였습니다.");
+            } else {
+                snackbar("일시적인 오류로 업로드를 실패하였습니다.");
+            }
         });
-        snackbar('적용되었습니다.');
     }
 }
 function settingsPage_check_admin() {
@@ -691,7 +742,10 @@ function update_bio(type) {
 
         let ajax = A_JAX_FILE(TEST_IP+"department_update", "POST", null, data);
         $.when(ajax).done(()=>{
-            if (ajax.responseJSON.result === 'img is not defined') {
+            if (ajax.responseJSON.result === 'success'){
+                snackbar("성공적으로 업로드하였습니다.");
+            }
+            else if (ajax.responseJSON.result === 'img is not defined') {
                 snackbar('새로운 국장 소개를 추가할 때는 사진을 필수로 업로드해야합니다.')
             }
             else if (ajax.responseJSON.result === 'wrong extension') {
@@ -703,7 +757,6 @@ function update_bio(type) {
             }
         });
     }
-    snackbar('적용되었습니다.');
 }
 
 function add_intro() {
@@ -768,12 +821,20 @@ function delete_intro(target, id) {
     });
 }
 
-
-
-
-
-
-
-
-
-
+//사용자 검색 함수
+function search_user_list_realtime(tag) {
+    let target = $('#M_user_info');
+    let value = tag.val();
+    for (let i = 0; i < search_user_info_ajax_list.length; i++){    //전부 보여주기
+        let num = search_user_info_ajax_list[i]['user_id'];
+        $('div[alt_id='+num+']').css('display', 'block');
+    }
+    for (let i = 0; i < search_user_info_ajax_list.length; i++){    //가리기
+        let name = search_user_info_ajax_list[i]['user_name'];  //홍길동
+        let num = search_user_info_ajax_list[i]['user_id'];     //16011075
+        let name_num = name+num;                                //홍길동16011075
+        if (name_num.indexOf(value) == -1){
+            $('div[alt_id='+num+']').css('display', 'none');
+        }
+    }
+}

@@ -15,19 +15,41 @@ IMG_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
 #페이지 URL#############################################
 @BP.route('/board/')
 def board():
-   return render_template('board/board.html')
+	today = select_today_visitor(g.db)
+	if request.remote_addr not in today:
+		insert_today_visitor(g.db, request.remote_addr)
+
+	return render_template('board/board.html')
 
 @BP.route('/gallery')
 def gallery():
-   return render_template('board/image.html')
+	today = select_today_visitor(g.db)
+
+	if request.remote_addr not in today:
+		#방문자 기록
+		insert_today_visitor(g.db, request.remote_addr)
+
+	return render_template('board/image.html')
 
 @BP.route('/intro')
 def intro():
-   return render_template('board/intro.html')
+	today = select_today_visitor(g.db)
+
+	if request.remote_addr not in today:
+		#방문자 기록
+		insert_today_visitor(g.db, request.remote_addr)
+
+	return render_template('board/intro.html')
 
 @BP.route('/v')
 def postpage():
-   return render_template('board/postpage.html')
+	today = select_today_visitor(g.db)
+
+	if request.remote_addr not in today:
+		#방문자 기록
+		insert_today_visitor(g.db, request.remote_addr)
+
+	return render_template('board/postpage.html')
 #######################################################
 #보드 / 포스트 반환#############################################
 

@@ -71,8 +71,8 @@
 				</div>
 			</li>
 			<!--유저버튼-->
-			<li id="M_nav_user" class="gn-trigger" onclick="M_dropdown_user()">
-				<a><i class="fas fa-user" style="padding: 0 10px;"></i></a>
+			<li id="M_nav_user" class="gn-trigger">
+				<a onclick="M_dropdown_user()"><i class="fas fa-user" style="padding: 0 10px;"></i></a>
 				<!--로그인시-->
 				<div id="M_nav_user_login" class="M_nav_user M_boxshadow_user display_none">
 					<div>
@@ -134,6 +134,7 @@
 					<input id="user_pw" class="input100" type="password" name="user_pw" required onkeyup="login_enter()">
 					<span class="focus-input100" data-placeholder="비밀번호"></span>
 				</div>
+				<p style="margin-top: 10px; margin-bottom: 0;">※ 세종대학교 포털아이디로 로그인해주세요!</p>
 				<div class="M_login_submit" onclick="user_login()">로그인</div>
 			</form>
     	</div>

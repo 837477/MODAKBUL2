@@ -76,8 +76,8 @@
             </div>
         </li>
         <!--유저버튼-->
-        <li id="M_nav_user" class="gn-trigger" onclick="M_dropdown_user()">
-            <a><i class="fas fa-user" style="padding: 0 10px;"></i></a>
+        <li id="M_nav_user" class="gn-trigger">
+            <a onclick="M_dropdown_user()"><i class="fas fa-user" style="padding: 0 10px;"></i></a>
             <!--로그인시-->
             <div id="M_nav_user_login" class="M_nav_user M_boxshadow_user display_none">
                 <div>
@@ -267,7 +267,7 @@
                 </div>
             </div>
             <div class="M_user_search_wrapper">
-                <input class="M_user_search" type="text" placeholder="홍길동" autocomplete="off">
+                <input class="M_user_search" type="text" placeholder="홍길동" autocomplete="off" onkeyup="search_user_list_realtime($(this))">
                 <div onclick="search_user()" class="M_user_search_button">
                     <i style="margin-left: 3%;" class="fas fa-search"></i>
                 </div>

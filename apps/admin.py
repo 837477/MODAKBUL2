@@ -16,7 +16,13 @@ ACCESS_DENIED_BOARD = ['공지', '갤러리', '학생회소개', '통계', '대�
 #페이지 URL#############################################
 @BP.route('/settings')
 def settings():
-   return render_template('admin/settings.html')
+	today = select_today_visitor(g.db)
+
+	if request.remote_addr not in today:
+		#방문자 기록
+		insert_today_visitor(g.db, request.remote_addr)
+
+	return render_template('admin/settings.html')
 #######################################################
 #관리자 기능#############################################
 
@@ -513,7 +519,7 @@ def get_user_list():
 		user.update(user_tags = tags)
 
 	return jsonify(
-		result = "result",
+		result = "success",
 		user_list = user_list)
 
 #특정 회원 반환 (OK)
