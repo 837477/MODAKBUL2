@@ -472,7 +472,7 @@ def search_log():
 
 	#로그 기록
 	insert_log(g.db, user['user_id'], request.url_rule)
-
+	
 	#관리자 아니면 접근 거절!
 	if not check_admin(g.db, user['user_id']): 
 		abort(400)
