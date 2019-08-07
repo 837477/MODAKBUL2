@@ -395,13 +395,9 @@ def post_upload():
 		#첨부할 파일이 있는지 확인
 		if files:
 			for file in files:
-				
-				#확장자 검사 후,
-				#허용불가 확장자면 None!
-				#허용이면, 딕셔너리 형태로
-				#원본, 리사이즈 이름을 반환
 				allow_check = file_name_encode(file.filename)
 
+				#확장자 및 파일네임 길이 검사
 				if allow_check is not None:
 					#DB에 파일 추가.
 					path_result = insert_attach(g.db, post_id, allow_check['original'], allow_check['resize_s'])

@@ -477,7 +477,6 @@ def search_log():
 	if not check_admin(g.db, user['user_id']): 
 		abort(400)
 
-
 	result = {}
 	
 	input_str = request.form['input_str']
@@ -492,7 +491,7 @@ def search_log():
 
 	return jsonify(result)
 
-#총 회원 반환 (미사용)
+#총 회원 반환
 @BP.route('/get_user_list')
 @jwt_required
 def get_user_list():
@@ -503,7 +502,7 @@ def get_user_list():
 	#로그 기록
 	insert_log(g.db, user['user_id'], request.url_rule)
 
-	#관리자 계정이 아니면 ㅃ2
+	#관리자 계정 확인
 	if not check_admin(g.db, user['user_id']):
 		return jsonify(result = "you are not admin")
 
