@@ -464,10 +464,9 @@ def update_tag_():
 	return jsonify(result = result)
 
 #로그 검색 (미사용)
-@BP.route('/search_log/<string:input_str>')
-#@jwt_required
-def search_log(input_str):
-	'''
+@BP.route('/search_log', methods=['POST'])
+@jwt_required
+def search_log():
 	user = select_user(g.db, get_jwt_identity())
 	if user is None: abort(400)
 
@@ -477,11 +476,11 @@ def search_log(input_str):
 	#관리자 아니면 접근 거절!
 	if not check_admin(g.db, user['user_id']): 
 		abort(400)
-	'''
+
 
 	result = {}
 	
-	#input_str = request.form['input_str']
+	input_str = request.form['input_str']
 
 	topic_list = input_str.split('_')
 
