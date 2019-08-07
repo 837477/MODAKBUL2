@@ -497,7 +497,7 @@ def search_log():
 
 	return jsonify(result)
 
-#총 회원 반환
+#총 회원 반환 (OK)
 @BP.route('/get_user_list')
 @jwt_required
 def get_user_list():
