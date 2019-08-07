@@ -37,6 +37,8 @@ def visitor_analysis(days):
 	total_visitor = select_everyday_visitor_total(g.db)
 	total = total_visitor['total']
 
+	total = int(total) + int(today)
+
 	result.update(
 			user_color = color,
 			everyday_analysis = everyday_analysis,
