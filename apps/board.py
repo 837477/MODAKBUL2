@@ -288,7 +288,7 @@ def get_post(post_id):
 
 	return jsonify(result)
 
-#단일 포스트 불러오기(포스트 정보 가져오는 함) (OK)
+#단일 포스트 불러오기(포스트 정보 가져오는 함수) (OK)
 def get_post_func(post_id):
 	result = {}
 	post = select_post(g.db, post_id)
