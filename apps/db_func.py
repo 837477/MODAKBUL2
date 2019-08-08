@@ -540,7 +540,7 @@ def insert_access_check_post(db, board_url):
 #작성자 / 제목 / 타이틀 검색!
 def select_search(db, topic_list):
 	with db.cursor() as cursor:
-		sql = 'SELECT * FROM v_post WHERE '
+		sql = 'SELECT post_id, user_id AS author_id, post_title, post_content, post_view, post_date, post_anony, post_secret, post_url_link, post_url_img, user_name AS author_name, user_color AS author_color, comment_cnt, like_cnt FROM v_post WHERE '
 
 		for topic in topic_list:
 			#작성자 찾기

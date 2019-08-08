@@ -718,7 +718,7 @@ input {
       text-align: center;
       background-color: rgba(0,0,0,0);
       border-radius: 0;
-      border-bottom: 1.5px solid grey;
+      border-left: 1.5px solid #c30e2e;
       transition: 0.4s;
   }
   .M_settings_nav_content:hover {
@@ -805,7 +805,7 @@ input {
     text-align: center;
     background-color: rgba(0,0,0,0);
     border-radius: 0;
-    border-bottom: 1.5px solid grey;
+    border-left: 1.5px solid #c30e2e;
   }
 }
 @media screen and (max-width: 550px){
@@ -819,12 +819,12 @@ input {
       height: 30px;
       margin: 0px 1% 10px 0;
       font-size: 14px;
-      line-height: 30px;
+      line-height: 20px;
       padding: 5px;
       text-align: center;
       background-color: rgba(0,0,0,0);
       border-radius: 0;
-      border-bottom: 1.5px solid grey;
+      border-left: 1.5px solid #c30e2e;
     }
     .M_settings_nav {
         padding: 0 11px;
@@ -845,12 +845,12 @@ input {
       height: 30px;
       margin: 0px 1% 10px 0;
       font-size: 14px;
-      line-height: 30px;
+      line-height: 20px;
       padding: 5px;
       text-align: center;
       background-color: rgba(0,0,0,0);
       border-radius: 0;
-      border-bottom: 1.5px solid grey;
+      border-left: 1.5px solid #c30e2e;
     }
     .M_settings_nav {
         padding: 0 11px;
@@ -876,7 +876,7 @@ input {
       text-align: center;
       background-color: rgba(0,0,0,0);
       border-radius: 0;
-      border-bottom: 1.5px solid grey;
+      border-left: 1.5px solid #c30e2e;
     }
 }
 @media screen and (max-width: 380px){
@@ -895,7 +895,7 @@ input {
       text-align: center;
       background-color: rgba(0,0,0,0);
       border-radius: 0;
-      border-bottom: 1.5px solid grey;
+      border-left: 1.5px solid #c30e2e;
     }
 }
 @media screen and (max-width: 360px){
@@ -904,7 +904,7 @@ input {
       display: inline-block;
       float: left;
       width: 33.3333%;
-      max-width: 102px;
+      max-width: 100px;
       min-width: 50px;
       height: 40px;
       margin: 0px 1% 10px 0;
@@ -914,16 +914,16 @@ input {
       text-align: center;
       background-color: rgba(0,0,0,0);
       border-radius: 0;
-      border-bottom: 1.5px solid grey;
+      border-left: 1.5px solid #c30e2e;
     }
 }
-@media screen and (max-width: 340px){
+@media screen and (max-width: 320px){
     .M_settings_nav_content{
       position: relative;
       display: inline-block;
       float: left;
       width: 33.3333%;
-      max-width: 90px;
+      max-width: 95px;
       min-width: 50px;
       height: 40px;
       margin: 0px 1% 10px 0;
@@ -933,9 +933,19 @@ input {
       text-align: center;
       background-color: rgba(0,0,0,0);
       border-radius: 0;
-      border-bottom: 1.5px solid grey;
+      border-left: 1.5px solid #c30e2e;
     }
 }
+@media screen and (max-width: 300px){
+    .M_settings_nav_content{
+      position: relative;
+      display: inline-block;
+      float: left;
+      width: 33.3333%;
+      max-width: 87px;
+    }
+}
+
 /*checkbox CSS =======================================*/
 .CB_switch {
   position: relative;

@@ -1,4 +1,5 @@
 //라벨, 이름, 시간, 제목, 본문, 조회수, 공감수, 댓글, 첨부파일, 사진, 태그
+var filter = "win16|win32|win64|mac|macintel";
 var is_postmodal_open = 0;
 var is_postmodal_fixed_open = 0;
 var now_postmodal_top = 0;
@@ -391,8 +392,7 @@ function empty_post_info(){
 	is_post_like = 0;
 	$('#M_post_top_heart').removeAttr('style');
 }
-// 모바일
-var filter = "win16|win32|win64|mac|macintel";
+// 모바일 pc 구분
 if ( navigator.platform ) { //mobile
 	if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
 		$('#M_post_user_comment_input').focus(function() {
@@ -588,6 +588,13 @@ function post_write() {
 	$('#M_user_post_modal_container_fixed').removeClass('fadeOutDown');
 	$('#M_user_post_modal_container_fixed').addClass('fadeInUp');
 	$('#M_user_post_modal_container_fixed').removeClass('display_none');
+	if ( navigator.platform ) { //mobile
+		if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
+			$('#M_postupload_waring_span_mobile').removeClass('display_none');
+		} else {	//pc
+			$('#M_postupload_waring_span_pc').removeClass('display_none');
+		}
+	}
 }
 
 //포스트 수정 함수
@@ -624,6 +631,13 @@ function post_modify() {
 	$('#M_post_fixed_title_input').val(title);
 	$('.note-editable').empty();
 	$('.note-editable').append(content);
+	if ( navigator.platform ) { //mobile
+		if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
+			$('#M_postupload_waring_span_mobile').removeClass('display_none');
+		} else {	//pc
+			$('#M_postupload_waring_span_pc').removeClass('display_none');
+		}
+	}
 }
 
 //포스트 삭제 함수
@@ -808,6 +822,13 @@ function post_write_cancel() {
 	$('html, body').removeAttr("style");
 	$('html, body').removeClass('M_modal_open_fixed');
 	$('html').scrollTop(now_postmodal_top);
+	if ( navigator.platform ) { //mobile
+		if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
+			$('#M_postupload_waring_span_mbile').addClass('display_none');
+		} else {	//pc
+			$('#M_postupload_waring_span_pc').addClass('display_none');
+		}
+	}
 }
 
 /*

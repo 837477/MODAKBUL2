@@ -654,7 +654,10 @@ function black_user(div) {
 function white_user(div) {
     let ajax = A_JAX(TEST_IP+"user_black_cancel", "POST", null, {'target_id': div.parent()[0].childNodes[1].innerText.split(' ')[1]});
     $.when(ajax).done(()=>{
-        if (ajax.responseJSON.result === 'no blacklist') {
+        if (ajax.responseJSON.result === 'success'){
+            snackbar("블랙리스트에서 제거되었습니다.");
+        }
+        else if (ajax.responseJSON.result === 'no blacklist') {
             snackbar('이미 블랙리스트에서 제거된 사용자 입니다.');
         }
         $('.M_setting_blacklist').empty();

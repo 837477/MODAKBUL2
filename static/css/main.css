@@ -1237,6 +1237,12 @@ a:focus {
 .M_board_content_lock_block {
   display: block !important;
 }
+.M_board_content_comment {
+  display: block !important;
+}
+.M_board_info_comment {
+  display: block !important;
+}
 @media screen and (max-width: 450px) {
   .M_board_content_icon {
     display: none;
@@ -1752,6 +1758,7 @@ a:focus {
   width: 100%;
   height: 1px;
   margin-top: 10px;
+  margin-bottom: 10px;
   background-color: #e2e2e2;
   border-radius: 10px;
 }
@@ -2416,6 +2423,31 @@ a:focus {
   margin-top: 35px;
   margin-bottom: 80px;
 }
+@media screen and (min-width: 1000px) {
+  .M_statistics_button_container {
+    position: absolute;
+    display: inline-block;
+    width: 700px;
+    height: 50px;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0);
+    margin-top: 35px;
+    margin-bottom: 0;
+  } 
+}
+@media screen and (max-width: 450px) {
+  .M_statistics_button_container {
+    position: relative;
+    display: inline-block;
+    width: 700px;
+    height: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 0;
+    margin-bottom: 80px;
+  } 
+}
 button {
   color: inherit;
 }
@@ -2569,7 +2601,7 @@ button:focus {
 @media screen and (max-width: 800px){
   .M_statistics_graph_all_css {
     width: 99%;
-    height: 50%;
+    height: auto;
   }
 }
 .M_graph_box_container {
@@ -2582,7 +2614,7 @@ button:focus {
 }
 @media screen and (max-width: 450px){
   .M_graph_box_container {
-    height: 445px;
+    height: 350px;
     margin-bottom: 0px;
   }
 }

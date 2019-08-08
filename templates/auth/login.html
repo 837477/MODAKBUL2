@@ -30,7 +30,7 @@
 </head>
 
 
-<body class="M_white_theme" onload="setTheme(); get_user_info();">
+<body class="M_white_theme" onload="setTheme()">
 	<!--Side Menu : necessary-->
 	<div id="M_nav_container" class="container M_sidemenu">
 		<ul id="gn-menu" class="gn-menu-main M_boxshadow">
@@ -178,4 +178,9 @@
 <script src="../static/js/themeChange.js"></script>
 <script src="../static/js/loginpage_change.js"></script>
 <script src="../static/js/navigation.js"></script>
+<script>
+	if (localStorage.getItem('modakbul_token') != null){
+		get_user_info();
+	}
+</script>
 </html>

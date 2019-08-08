@@ -285,7 +285,7 @@ function draw_visitor_graph(what, json) {
             graph_lable_name.push(time.getDate()*1);
         }
     }
-    if (what == 'week'){
+    else if (what == 'week'){
         for (let i = visitor_cnt_list.length - 7; i< visitor_cnt_list.length; i++){
             graph_lable_value.push(visitor_cnt_list[i]['visitor_cnt']*1);
         }
@@ -346,7 +346,7 @@ function draw_post_upload_graph(what, json) {
             graph_lable_name.push(time.getDate()*1);
         }
     }
-    if (what == 'week'){
+    else if (what == 'week'){
         for (let i = visitor_cnt_list.length - 7; i< visitor_cnt_list.length; i++){
             graph_lable_value.push(visitor_cnt_list[i]['posts_cnt']*1);
         }

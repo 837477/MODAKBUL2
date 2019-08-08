@@ -37,7 +37,7 @@ function whiteSetTheme() {
 	$('#M_nav_user_login').removeClass('M_boxshadow_dark_user M_dark_theme');
 	$('#M_nav_user_nologin').removeClass('M_boxshadow_dark_user M_dark_theme');
 	$('#gn-scroller').removeClass('M_dark_theme');
-	$('.gn-menu-main ul').css({"background-color": "white"});
+	$('.gn-menu-main ul').css({"background-color": "white", "color": "#5f6f81"});
 	$('.M_nav_user_button').css("color", "#5f6f81");
 	$('#M_gn-icon').removeClass('M_dark_theme');
 	$('.M_info_div').css({"background-color": "white", "color": "#3E5569", "border": "0.5px solid #dddddd"});
