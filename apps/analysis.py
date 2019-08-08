@@ -20,9 +20,9 @@ def statistics():
 #통계 관련3##############################################
 
 #누적 통계 반환 (OK)
-@BP.route('/today_analysis/<int:days>')
+@BP.route('/get_analysis/<int:days>')
 @jwt_optional
-def visitor_analysis(days):
+def get_analysis(days):
 	result = {}
 
 	#토큰이 있으면?

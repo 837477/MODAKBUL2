@@ -245,7 +245,7 @@ function calculate_date_list(what) {
 
 //AJAX 데이터 요청 밎 송신 (what == 'visitor' or 'post' or 'both')
 function visitor_post_graph(what, who){
-    let a_jax = A_JAX(TEST_IP+'today_analysis/'+31, "GET", null, null);
+    let a_jax = A_JAX(TEST_IP+'get_analysis/'+31, "GET", null, null);
     $.when(a_jax).done(function(){
         let json = a_jax.responseJSON;
         if (json['result'] == 'success'){
@@ -283,6 +283,9 @@ function draw_visitor_graph(what, json) {
         for (let i =0; i< visitor_cnt_list.length; i++){
             let time = new Date(Date.parse(visitor_cnt_list[i]['v_date']));
             graph_lable_name.push(time.getDate()*1);
+        }
+        for (let i = 0; i< visitor_cnt_list.length; i++){
+            graph_lable_value.push(visitor_cnt_list[i]['visitor_cnt']*1);
         }
     }
     else if (what == 'week'){
@@ -344,6 +347,9 @@ function draw_post_upload_graph(what, json) {
         for (let i =0; i< visitor_cnt_list.length; i++){
             let time = new Date(Date.parse(visitor_cnt_list[i]['v_date']));
             graph_lable_name.push(time.getDate()*1);
+        }
+        for (let i = 0; i< visitor_cnt_list.length; i++){
+            graph_lable_value.push(visitor_cnt_list[i]['posts_cnt']*1);
         }
     }
     else if (what == 'week'){
