@@ -544,7 +544,7 @@ def select_search(db, topic_list):
 
 		for topic in topic_list:
 			#작성자 찾기
-			sql += 'author_name LIKE '
+			sql += 'user_name LIKE '
 			like_topic = '"%' + topic + '%" OR '
 			sql += like_topic
 

@@ -49,8 +49,8 @@ def search(topic):
 		for topic in topic_list:
 			count += post['post_title'].count(topic)
 			count += post['post_content'].count(topic)
-			if post['user_name'] is not None:
-				count += post['user_name'].count(topic)
+			if post['author_name'] is not None:
+				count += post['author_name'].count(topic)
 
 		post.update(
 			frequency = count,
