@@ -403,6 +403,11 @@ def post_upload():
 		return jsonify(result = "unavailable word")
 	tag_list = tags.split('_')
 
+	#파일 용량 체크.
+	if files:
+		if not files_size_check(files):
+			return jsonify(result = "too large files")
+
 	#익명 글이면?
 	anony = int(anony)
 	if anony:
@@ -628,6 +633,18 @@ def file_name_encode(file_name):
 	
 	else:
 		return None
+
+
+#파일 사이즈 측정
+def files_size_check(files):
+	files_size = 0
+	for file in files:
+		files_size += len(file.read())
+	#총 파일 크기 50MB 제한 
+	if files_size < (50 * (1024 ** 2)):
+		return True
+	else:
+		return False
 
 
 

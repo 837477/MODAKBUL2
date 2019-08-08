@@ -1356,7 +1356,8 @@ a:focus {
     margin: auto;
     margin-top: 50px;
     z-index: 70;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 @media screen and (min-width: 851px){
