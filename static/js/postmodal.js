@@ -558,7 +558,7 @@ function clipboardCopy(tag) {
 	let post_id = tag.getAttribute('alt');
 	var clipboard_textarea = document.createElement('textarea');
 	clipboard_textarea.setAttribute('id', 'clipboard_copy');
-	clipboard_textarea.value = TEST_IP+"v#"+post_id;
+	clipboard_textarea.value = DOMAIN+TEST_IP+"v#"+post_id;
 	clipboard_textarea.style.zIndex = "-3000";
 	document.body.appendChild(clipboard_textarea);
 	clipboard_textarea.select();
@@ -829,6 +829,10 @@ function post_write_cancel() {
 			$('#M_postupload_waring_span_pc').addClass('display_none');
 		}
 	}
+}
+
+function anony_waring_snackbar() {
+	snackbar("익명글은 수정, 삭제가 불가능합니다.");
 }
 
 /*

@@ -84,15 +84,15 @@ $(window).ready(function() {
                         '<div class="M_user_profile_color" style="background-color:'+user_color+'"></div>' +
                         '<div class="M_user_name">' + user_name + '</div>' +
                         '<div class="M_time_info">| ' + submission_time + '</div>' +
-                        '<i class="fas fa-lock M_board_content_icon M_board_content_lock '+is_lock_icon+'"></i>' +
-                        '<i class="fas fa-paperclip M_board_content_icon M_board_content_paperclip '+is_attachment_icon+'"></i>' +
-                        '<i class="fas fa-image M_board_content_icon M_board_content_image '+is_image_icon+'"></i>' +
                         '<div class="M_board_content_info M_board_info_comment">' + comment_count + '</div>' +
                         '<i class="fas fa-comment M_board_content_icon M_board_content_comment"></i>' +
                         '<div class="M_board_content_info">' + likes + '</div>' +
                         '<i class="fas fa-heart M_board_content_icon"></i>' +
                         '<div class="M_board_content_info">' + views +'</div>' +
                         '<i class="fas fa-eye M_board_content_icon"></i>' +
+                        '<i class="fas fa-lock M_board_content_icon M_board_content_lock '+is_lock_icon+'"></i>' +
+                        '<i class="fas fa-paperclip M_board_content_icon M_board_content_paperclip '+is_attachment_icon+'"></i>' +
+                        '<i class="fas fa-image M_board_content_icon M_board_content_image '+is_image_icon+'"></i>' +
                         '<div class="M_board_content_title">'+ title +'</div>' +
                         '</div>');
             }
@@ -157,19 +157,19 @@ $(window).scroll(function() {
                             }
                             $(".M_board_contents_container")
                                 .append(
-                                    '<div class="' + div_class + '" '+post_href +'>' +
+                                    '<div class="' + div_class + '" '+post_href+'>' +
                                     '<div class="M_user_profile_color" style="background-color:'+user_color+'"></div>' +
                                     '<div class="M_user_name">' + user_name + '</div>' +
                                     '<div class="M_time_info">| ' + submission_time + '</div>' +
-                                    '<i class="fas fa-lock M_board_content_icon M_board_content_lock '+is_lock_icon+'"></i>' +
-                                    '<i class="fas fa-paperclip M_board_content_icon M_board_content_paperclip '+is_attachment_icon+'"></i>' +
-                                    '<i class="fas fa-image M_board_content_icon M_board_content_image '+is_image_icon+'"></i>' +
-                                    '<div class="M_board_content_info">' + comment_count + '</div>' +
-                                    '<i class="fas fa-comment M_board_content_icon"></i>' +
+                                    '<div class="M_board_content_info M_board_info_comment">' + comment_count + '</div>' +
+                                    '<i class="fas fa-comment M_board_content_icon M_board_content_comment"></i>' +
                                     '<div class="M_board_content_info">' + likes + '</div>' +
                                     '<i class="fas fa-heart M_board_content_icon"></i>' +
                                     '<div class="M_board_content_info">' + views +'</div>' +
                                     '<i class="fas fa-eye M_board_content_icon"></i>' +
+                                    '<i class="fas fa-lock M_board_content_icon M_board_content_lock '+is_lock_icon+'"></i>' +
+                                    '<i class="fas fa-paperclip M_board_content_icon M_board_content_paperclip '+is_attachment_icon+'"></i>' +
+                                    '<i class="fas fa-image M_board_content_icon M_board_content_image '+is_image_icon+'"></i>' +
                                     '<div class="M_board_content_title">'+ title +'</div>' +
                                     '</div>');
                         }
