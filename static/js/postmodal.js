@@ -711,7 +711,6 @@ function post_write_accept() {
    for (let i = 0; i < M_files.length; i++) {
       M_files_size += M_files[i].size;
    }
-   console.log(M_files_size);
    if (M_files_size > file_max_size){
       snackbar("파일 용량을 초과하였습니다.");
       return;

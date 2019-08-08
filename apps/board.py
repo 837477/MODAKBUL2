@@ -403,10 +403,13 @@ def post_upload():
 		return jsonify(result = "unavailable word")
 	tag_list = tags.split('_')
 
-	#파일 용량 체크.
+	'''
+	check_temp_files = files
+	#총 파일 용량 체크.
 	if files:
-		if not files_size_check(files):
+		if not files_size_check(check_temp_files):
 			return jsonify(result = "too large files")
+	'''
 
 	#익명 글이면?
 	anony = int(anony)

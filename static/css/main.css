@@ -1338,7 +1338,6 @@ a:focus {
   margin-top: 50px;
   z-index: 70;
   overflow-y: auto;
-  overflow-x: hidden;
   padding-bottom: 0;
 }
 .M_user_post_modal_container::-webkit-scrollbar { 
@@ -1357,7 +1356,6 @@ a:focus {
     margin-top: 50px;
     z-index: 70;
     overflow-y: auto;
-    overflow-x: hidden;
   }
 }
 @media screen and (min-width: 851px){
@@ -1478,6 +1476,7 @@ a:focus {
   padding: 20px 10px 20px 10px;
   font-size: 18px;
   margin-bottom: 100px;
+  overflow-x: hidden;
 }
 @media screen and (max-width: 450px){
   .M_post_body {
@@ -1931,7 +1930,6 @@ a:focus {
   width: 100%;
   min-height: 40px;
   height: auto;
-  max-height: 80px;
   font-size: 18px;
   color: #5f6f81;
   background-color: rgba(0,0,0,0);
