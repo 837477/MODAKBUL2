@@ -14,8 +14,6 @@
 }
 
 
-
-
 * {
   margin: 0px; 
   padding: 0px; 
@@ -1216,7 +1214,7 @@ a:focus {
   float: right;
   opacity: 0.7;
   margin-right: 1%;
-  margin-top: 0.7%;
+  margin-top: 0.5%;
 } 
 
 .M_board_content_image_none {

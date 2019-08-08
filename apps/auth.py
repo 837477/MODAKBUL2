@@ -24,6 +24,10 @@ def sign_in():
 #로그인 및 회원가입(토큰발행) (OK)
 @BP.route('/sign_in_up', methods=['POST'])
 def login_modakbul():
+
+	print("\n")
+	print(request.form)
+
 	USER_ID = request.form['id']
 	USER_PW = request.form['pw']
 
