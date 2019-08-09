@@ -42,6 +42,12 @@ function user_logout(){
 	$("#M_nav_user_login").animate({height: 'hide'}, 'fast');
 	snackbar("로그아웃 되었습니다.");
 }
+function user_logout_setting(){
+	localStorage.removeItem('modakbul_token');
+	$("#M_nav_user_login").animate({height: 'hide'}, 'fast');
+	snackbar("로그아웃 되었습니다.");
+	location.href = '/';
+}
 
 //엔터 로그인
 function login_enter(){
@@ -116,6 +122,7 @@ function get_user_info() {
 		}
 		else{
 			snackbar("일시적인 오류로 정보를 가져오지 못하였습니다.");
+			localStorage.removeItem('modakbul_token');
 		}
 	});
 }

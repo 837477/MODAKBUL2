@@ -4,7 +4,6 @@ let search_user_info_ajax_list;
 $(document).ready(()=>{
    let ajax = A_JAX(TEST_IP+'get_variables', "GET", null, null);
    $.when(ajax).done(()=>{
-
        let name = ajax.responseJSON.variables.filter(data => {
            return data.v_key === '학생회이름'
        });
@@ -14,8 +13,16 @@ $(document).ready(()=>{
        let image = ajax.responseJSON.variables.filter(data =>{
            return data.v_key === '학생회로고'
        });
+       let introduce = ajax.responseJSON.variables.filter(data =>{
+           return data.v_key === '총인사말'
+       });
+       let contactus = ajax.responseJSON.variables.filter(data =>{
+           return data.v_key === '연락처'
+       });
        $('#M_union_name').attr('placeholder', name[0].value);
        $('#M_union_subtitle').attr('placeholder', subtitle[0].value);
+       $('#M_union_info_wrapper_introduce_textarea').append(introduce[0].value);
+       $('#M_union_info_wrapper_phonenumber_textarea').append(contactus[0].value);
    });
    let filter = "win16|win32|win64|mac|macintel";
     if ( navigator.platform ) { //mobile
@@ -48,7 +55,6 @@ $(document).ready(()=>{
     let intro_ajax = A_JAX(TEST_IP+'get_department/0', 'GET', null, null);
     let result_html = '';
     $.when(intro_ajax).done(()=>{
-
         for (let i=0; i<intro_ajax.responseJSON.department.length; i++)
         {
             result_html +=
@@ -84,7 +90,7 @@ $(document).ready(()=>{
                 '                        <div class="M_setting_subtitle">소개</div>\n' +
                 '                    </div>\n' +
                 '                    <div class="M_manager_bio">\n' +
-                '                        <textarea class="M_bio_input" style="height: 100px; margin-bottom: 0;" type="text"></textarea>' +
+                '                        <textarea class="M_bio_input" style="height: 100px; margin-bottom: 0;" type="text">'+intro_ajax.responseJSON.department[i].dm_intro+'</textarea>' +
                 '                    </div>'+
                 '              </div>'+
                 '            </div>';
@@ -131,7 +137,7 @@ $(document).ready(()=>{
                 '                        <div class="M_setting_subtitle">소개</div>\n' +
                 '                    </div>\n' +
                 '                    <div class="M_manager_bio">\n' +
-                '                        <textarea class="M_bio_input" style="height: 100px; margin-bottom: 0;" type="text"></textarea>' +
+                '                        <textarea class="M_bio_input" style="height: 100px; margin-bottom: 0;" type="text">'+intro_ajax2.responseJSON.department[i].dm_intro+'</textarea>' +
                 '                    </div>'+
                 '              </div>'+
                 '<div onclick="delete_intro($(this), ' + intro_ajax2.responseJSON.department[i].dm_id + ')" class="M_setting_introduce_delete_button">'+
@@ -302,6 +308,7 @@ function accept_modify_tag(tag) {
                 }
             });
             let tag_input_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
+            $('.M_nav_add').empty();
             $.when(tag_input_ajax).done(function() {
                 for (let i=0; i<tag_input_ajax.responseJSON.tags.length; i++)
                 {
@@ -350,13 +357,14 @@ function delete_modify_tag(tag) {
                     )
                 }
             });
-            let tag_input_ajax = A_JAX(TEST_IP+'get_tags', 'GET', null, null);
-                $.when(tag_input_ajax).done(function() {
-                    for (let i=0; i<tag_input_ajax.responseJSON.tags.length; i++)
-                    {
-                        $('.M_nav_add').append('<div onclick="select_tag($(this))" class="M_nav_tag"># ' + tag_ajax.responseJSON.tags[i] + '</div>')
-                    }
-                });
+            let tag_input_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
+            $('.M_nav_add').empty();
+            $.when(tag_input_ajax).done(function() {
+                for (let i=0; i<tag_input_ajax.responseJSON.tags.length; i++)
+                {
+                    $('.M_nav_add').append('<div onclick="select_tag($(this))" class="M_nav_tag"># ' + tag_ajax.responseJSON.tags[i] + '</div>')
+                }
+            });
         } else {
             snackbar("태그 삭제에 실패하였습니다.");
         }
@@ -430,6 +438,7 @@ function plus_tag_append(tag) {
                     }
                 });
                 let tag_input_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
+                $('.M_nav_add').empty();
                 $.when(tag_input_ajax).done(function() {
                     for (let i=0; i<tag_input_ajax.responseJSON.tags.length; i++)
                     {
@@ -518,10 +527,10 @@ function submit_bio() {
         $.when(img_ajax).done(()=>{
             if (img_ajax.responseJSON['result'] == 'success'){
                 snackbar("성공적으로 업로드하였습니다.");
+                M_setting_init_data();
             } else {
                 snackbar("일시적인 오류로 업로드를 실패하였습니다.");
             }
-            location.reload();
         })
     }
     if (name_updated === true)
@@ -535,6 +544,7 @@ function submit_bio() {
             div.attr('placeholder', new_name);
             if (name_ajax.responseJSON['result'] == 'success'){
                 snackbar("성공적으로 업로드하였습니다.");
+                M_setting_init_data();
             } else {
                 snackbar("일시적인 오류로 업로드를 실패하였습니다.");
             }
@@ -552,11 +562,11 @@ function submit_bio() {
             div.attr('placeholder', new_subtitle);
             if (subtitle_ajax.responseJSON['result'] == 'success'){
                 snackbar("성공적으로 업로드하였습니다.");
+                M_setting_init_data();
             } else {
                 snackbar("일시적인 오류로 업로드를 실패하였습니다.");
             }
         });
-        snackbar('적용되었습니다.');
     }
     if (main_bio_updated === true)
     {
@@ -572,6 +582,7 @@ function submit_bio() {
             $('#M_union_info_wrapper_introduce_textarea').attr('placeholder', tmp);
             if (main_bio_ajax.responseJSON['result'] == 'success'){
                 snackbar("성공적으로 업로드하였습니다.");
+                M_setting_init_data();
             } else {
                 snackbar("일시적인 오류로 업로드를 실패하였습니다.");
             }
@@ -591,6 +602,7 @@ function submit_bio() {
             $('#M_union_info_wrapper_phonenumber_textarea').attr('placeholder', tmp);
             if (contacts_ajax.responseJSON['result'] == 'success'){
                 snackbar("성공적으로 업로드하였습니다.");
+                M_setting_init_data();
             } else {
                 snackbar("일시적인 오류로 업로드를 실패하였습니다.");
             }
@@ -715,7 +727,7 @@ function change_password() {
         if (ajax.responseJSON.result === 'success'){
             snackbar("비밀번호 변경에 성공하였습니다.");
             setTimeout(function() {
-                location.reload();
+                M_setting_init_data();
             }, 400);
         }
         else if (ajax.responseJSON.result === 'not same pw') {
@@ -765,6 +777,7 @@ function update_bio(type) {
         $.when(ajax).done(()=>{
             if (ajax.responseJSON.result === 'success'){
                 snackbar("성공적으로 업로드하였습니다.");
+                M_setting_init_data();
             }
             else if (ajax.responseJSON.result === 'img is not defined') {
                 snackbar('새로운 국장 소개를 추가할 때는 사진을 필수로 업로드해야합니다.')
@@ -774,7 +787,6 @@ function update_bio(type) {
             }
             else if (ajax.responseJSON.result === 'file save fail') {
                 alert('일시적인 오류입니다. 다시시도해주세요.');
-                location.reload();
             }
         });
     }

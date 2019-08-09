@@ -1,3 +1,30 @@
+let final_result = [];
+let send_data = [];
+let board_rank = 0;
+let sortable_list = [];
+var ACCESS_DENIED_BOARD = ['공지', '갤러리', '학생회소개', '통계', '대외활동', '대외활동_공모전', '대외활동_취업', '투표', '장부'];
+let main_list;
+let main_sortable;
+
+function M_setting_init_data_first() {
+    main_list = document.getElementById('M_sortable_list');
+    main_sortable = new Sortable(main_list, {
+        group: {
+            name: 'M_sortable_list',
+            put: false
+        },
+        animation: 150,
+        fallbackOnBody: true,
+        swapThreshold: 0.65,
+    });
+    
+    final_result = [];
+    send_data = [];
+    board_rank = 0;
+    sortable_list = [];
+    sortable_list.push(main_sortable);
+}
+/*
 let main_list = document.getElementById('M_sortable_list');
 let main_sortable = new Sortable(main_list, {
     group: {
@@ -9,20 +36,22 @@ let main_sortable = new Sortable(main_list, {
     swapThreshold: 0.65,
 });
 
-let sortable_list = [];
-sortable_list.push(main_sortable);
-
 let final_result = [];
 let send_data = [];
 let board_rank = 0;
+let sortable_list = [];
+sortable_list.push(main_sortable);
+*/
+var ACCESS_DENIED_BOARD = ['공지', '갤러리', '학생회소개', '통계', '대외활동', '대외활동_공모전', '대외활동_취업', '투표', '장부'];
 
-ACCESS_DENIED_BOARD = ['공지', '갤러리', '학생회소개', '통계', '대외활동', '대외활동_공모전', '대외활동_취업', '투표', '장부'];
 
-
-
-$(document).ready(function(){
+function M_setting_init_data() {
+    selected_tags_cnt = 0;
+    $('#M_new_board_name').val("");
+    $('#M_sortable_list').empty();
     let tag_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
     $.when(tag_ajax).done(function() {
+        $('.M_nav_add').empty();
         for (let i=0; i<tag_ajax.responseJSON.tags.length; i++)
         {
             $('.M_nav_add').append('<div onclick="select_tag($(this))" class="M_nav_tag"># ' + tag_ajax.responseJSON.tags[i] + '</div>')
@@ -121,12 +150,16 @@ $(document).ready(function(){
         }
         board_rank = board_ajax.responseJSON.boards[board_ajax.responseJSON.boards.length - 1];
     });
+}
+
+$(document).ready(function(){
+    M_setting_init_data_first();
+    M_setting_init_data();
 });
 
 
 function nav_submit(new_board, delete_board){
     let final_result = [];
-
     for (let i=0; i<sortable_list.length; i++){
         if (sortable_list[i].toArray().length != 0) final_result.push(sortable_list[i].toArray());
     }
@@ -137,16 +170,13 @@ function nav_submit(new_board, delete_board){
     let output = new FormData();
     let send_data = new Array;
     $.when(ajax).done(function () {
-
-        for (let i=0; i<final_result.length; i++) {
-
-            for (let j=0; j<final_result[i].length; j++) {
-                for (let k=0; k<ajax.responseJSON.boards.length; k++) {
+        for (let i=0; i<final_result.length; i++) {     //5
+            for (let j=0; j<final_result[i].length; j++) {  // 9, 8, 1, 2, 1
+                for (let k=0; k<ajax.responseJSON.boards.length; k++) { // 19
                     if (ajax.responseJSON.boards[k].board_url == final_result[i][j]) {
                         let tmp = ajax.responseJSON.boards[k];
                         tmp.board_rank = j;
                         send_data.push(tmp);
-
                     }
                 }
             }
@@ -170,7 +200,9 @@ function nav_submit(new_board, delete_board){
             let send_json = send_ajax.responseJSON;
             if (send_json['result'] == 'success'){
                 snackbar("메뉴를 설정하였습니다.");
-                location.reload();
+                M_setting_init_data_first();
+                M_setting_init_data();
+                //location.reload();
             } else {
                 snackbar("일시적인 오류로 메뉴를 적용하지 못하였습니다.");
             }
@@ -209,7 +241,7 @@ function create_board() {
     let tags_div = $('.M_tag_nav');
     let tags = [];
     if (tags_div.length < 1) {
-        alert('게시판 태그를 최소 1개 이상 선택해야 합니다.');
+        snackbar('게시판 태그를 최소 1개 이상 선택해야 합니다.');
         return;
     }
     for (let i=0; i < tags_div.length; i++) {
