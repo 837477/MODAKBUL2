@@ -299,6 +299,12 @@ function get_post_info(get_post_id) {
 			$('#M_post_time').append("| "+json['post']['post_date']); 	// 날짜 수정
 			$('#M_post_top_title').append(json['post']['post_title']);
 			$('#M_post_body').append(json['post']['post_content']);
+			//포스트 글씨 색 수정
+			if (localStorage.getItem('modakbul_theme') == 'dark'){
+				darkSetTheme();
+			} else {
+				whiteSetTheme();
+			}
 			let files = json['files'];
 			let img_files = [];
 			let attachment_files = [];
@@ -781,10 +787,6 @@ function post_write_accept() {
 			snackbar("파일 용량을 초과하였습니다.");
 			return;
 		}
-	}
-	if (M_files_size > file_max_size){
-		snackbar("파일 용량을 초과하였습니다.");
-		return;
 	}
 	var M_list = [];
 	if (is_post_modify == 0) {

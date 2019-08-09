@@ -58,7 +58,7 @@ $(document).ready(()=>{
                 '                        <div class="M_setting_tag"></div>\n' +
                 '                        <div class="M_setting_subtitle">사진</div>\n' +
                 '                    </div>\n' +
-                '                    <img id="M_principle_profile_pic-'+ intro_ajax.responseJSON.department[i].dm_id +'" onclick="profile_pic_upload(\'' + intro_ajax.responseJSON.department[i].dm_id + '\')\" src="/static/images/' + intro_ajax.responseJSON.department[i].dm_img + '" class="M_setting_introduce_image">\n' +
+                '                    <img id="M_principle_profile_pic-'+ intro_ajax.responseJSON.department[i].dm_id +'" onclick="profile_pic_upload(\'' + intro_ajax.responseJSON.department[i].dm_id + '\')\" src="/static/image/' + intro_ajax.responseJSON.department[i].dm_img + '" class="M_setting_introduce_image">\n' +
                 '                    <input onchange="profile_change($(this), '+ intro_ajax.responseJSON.department[i].dm_id +')" id="M_principle_profile_upload-'+ intro_ajax.responseJSON.department[i].dm_id +'" type="file" style="display: none;">\n' +
                 '                    <div class="M_image_warning_introduce">\n' +
                 '                    대표 사진을 업로드해주세요!\n' +
@@ -105,7 +105,7 @@ $(document).ready(()=>{
                 '                        <div class="M_setting_tag"></div>\n' +
                 '                        <div class="M_setting_subtitle">사진</div>\n' +
                 '                    </div>\n' +
-                '                    <img id="M_principle_profile_pic-'+ intro_ajax2.responseJSON.department[i].dm_id +'" onclick="profile_pic_upload(\'' + intro_ajax2.responseJSON.department[i].dm_id + '\')\" src="/static/images/' + intro_ajax2.responseJSON.department[i].dm_img + '" class="M_setting_introduce_image">\n' +
+                '                    <img id="M_principle_profile_pic-'+ intro_ajax2.responseJSON.department[i].dm_id +'" onclick="profile_pic_upload(\'' + intro_ajax2.responseJSON.department[i].dm_id + '\')\" src="/static/image/' + intro_ajax2.responseJSON.department[i].dm_img + '" class="M_setting_introduce_image">\n' +
                 '                    <input onchange="profile_change($(this), '+ intro_ajax2.responseJSON.department[i].dm_id +')" id="M_principle_profile_upload-'+ intro_ajax2.responseJSON.department[i].dm_id +'" type="file" style="display: none;">\n' +
                 '                    <div class="M_image_warning_introduce">\n' +
                 '                    대표 사진을 업로드해주세요!\n' +
@@ -488,12 +488,11 @@ let subtitle_updated = false;
 let main_bio_updated = false;
 let contacts_updated = false;
 
-/*
 $('#M_logo_upload').change(function () {
    image_preview(this);
    image_updated = true;
 });
-*/
+
 $('#M_union_name').change(()=>{
     name_updated = true;
 });
@@ -752,11 +751,6 @@ function update_bio(type) {
         let bio = $(list[i].children[1].children[5].children[0]).val();
         let id = $(list[i].children[0].children[2])[0].id.split('-')[1];
         bio = bio.replace(/\n/g, "<br />");
-        console.log(name);
-        console.log(info);
-        console.log(bio);
-        console.log(id);
-        console.log(image);
 
         let data = new FormData();
 
@@ -787,7 +781,6 @@ function update_bio(type) {
 }
 
 function add_intro() {
-    console.log(bio_cnt);
     $('#M_student_introduce_target_2').append(
         '            <div class="M_bio_wrapper" style="overflow-y: scroll;height: 85%;">\n' +
         '                <div class="M_setting_subtitle_wrapper3">\n' +
@@ -795,7 +788,7 @@ function add_intro() {
         '                        <div class="M_setting_tag"></div>\n' +
         '                        <div class="M_setting_subtitle">사진</div>\n' +
         '                    </div>\n' +
-        '                    <img id="M_principle_profile_pic-'+ bio_cnt +'" onclick="profile_pic_upload(\'' + bio_cnt + '\')\" src="/static/images/' + '#'+ '" class="M_setting_introduce_image">\n' +
+        '                    <img id="M_principle_profile_pic-'+ bio_cnt +'" onclick="profile_pic_upload(\'' + bio_cnt + '\')\" src="/static/image/' + '#'+ '" class="M_setting_introduce_image">\n' +
         '                    <input onchange="profile_change($(this), '+ bio_cnt +')" id="M_principle_profile_upload-'+ bio_cnt +'" type="file" style="display: none;">\n' +
         '                    <div class="M_image_warning_introduce">\n' +
         '                    대표 사진을 업로드해주세요!\n' +
@@ -834,7 +827,6 @@ function add_intro() {
 }
 
 function delete_intro(target, id) {
-    console.log(target.parent());
     target.parent().remove();
 
     if (id === undefined){

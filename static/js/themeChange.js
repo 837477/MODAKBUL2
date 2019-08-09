@@ -25,8 +25,8 @@ function darkSetTheme() {
 	$('#M_post_user_comment_anony_container').css({"background-color": "#41464a","color": "white"});
 	$('.demo-1').css("background-color", "#0e0e0f");
 	$('.menu__item').css({"color": "#fff", "opacity": "1"});
-	$('#M_post_body').addClass('M_dark_theme_post_body');
 	$('.M_post_user_comment_send').css({'color': '#e2e2e2', "background-color": "#41464A"});
+	$('#M_post_body p').addClass('M_dark_theme_post_body');
 }
 function whiteSetTheme() {
 	$('.M_theme').removeClass("fa-sun");
@@ -55,8 +55,8 @@ function whiteSetTheme() {
 	$('#M_post_user_comment_anony_container').css({"background-color": "#e2e2e2","color": "#3e5569"});
 	$('.demo-1').css("background-color", "#ffffff");
 	$('.menu__item').css({"color": "#000", "opacity": "0.7"});
-	$('#M_post_body').removeClass('M_dark_theme_post_body');
 	$('.M_post_user_comment_send').css({'color': '#5f6f81', "background-color": "#e2e2e2"});
+	$('#M_post_body p').removeClass('M_dark_theme_post_body');
 }
 function changeTheme() {
 	// now_theme check
