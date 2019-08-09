@@ -154,7 +154,6 @@ function nav_submit(new_board, delete_board){
 
         if (new_board) {
             send_data.push(new_board);
-            console.log(send_data);
         }
         if (delete_board) {
             let delete_board_list;

@@ -582,6 +582,9 @@ a:focus {
 .M_dark_theme_body {
   background-color: #323639;
 }
+.M_dark_theme_post_body {
+  color: #e2e2e2 !important;
+}
 .M_boxshadow_dark_shadow {box-shadow: 0px 5px 30px -10px rgb(0,0,0);}
 .M_boxshadow_dark_sidemenu {box-shadow: 0px 20px 30px -4px rgb(0,0,0)}
 .M_boxshadow_dark_user {box-shadow: 0px 10px 30px -10px rgb(0,0,0)}

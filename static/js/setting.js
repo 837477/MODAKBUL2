@@ -16,7 +16,6 @@ $(document).ready(()=>{
        });
        $('#M_union_name').attr('placeholder', name[0].value);
        $('#M_union_subtitle').attr('placeholder', subtitle[0].value);
-       //$('#M_image_preview').attr('src', '../static/image/'+image[0].value);
    });
    let filter = "win16|win32|win64|mac|macintel";
     if ( navigator.platform ) { //mobile
@@ -351,7 +350,7 @@ function delete_modify_tag(tag) {
                     )
                 }
             });
-            let tag_input_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
+            let tag_input_ajax = A_JAX(TEST_IP+'get_tags', 'GET', null, null);
                 $.when(tag_input_ajax).done(function() {
                     for (let i=0; i<tag_input_ajax.responseJSON.tags.length; i++)
                     {
@@ -458,10 +457,9 @@ let image;
 function image_preview(input) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();
-        /*
         reader.onload = function(e) {
             $('#M_image_preview').attr('src', e.target.result);
-        };*/
+        };
         reader.readAsDataURL(input.files[0]);
         image = input.files;
     }
