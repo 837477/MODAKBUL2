@@ -21,7 +21,7 @@ ACCESS_DENIED_BOARD = ['공지', '갤러리', '학생회소개', '통계', '대�
 
 
 $(document).ready(function(){
-    let tag_ajax = A_JAX(TEST_IP+'get_tags', 'GET', null, null);
+    let tag_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
     $.when(tag_ajax).done(function() {
         for (let i=0; i<tag_ajax.responseJSON.tags.length; i++)
         {
@@ -154,21 +154,32 @@ function nav_submit(new_board, delete_board){
 
         if (new_board) {
             send_data.push(new_board);
+            console.log(send_data);
         }
         if (delete_board) {
-            send_data.splice(send_data.indexOf(delete_board))
+            let delete_board_list;
+            for (let j=0; j<send_data.length; j++) {
+                if (JSON.stringify(send_data[j]) === JSON.stringify(delete_board)){
+                    delete_board_list = j;
+                }
+            }
+            send_data.splice(delete_board_list, 1);
         }
-
         output.append('boards', JSON.stringify(send_data));
-
         let send_ajax = A_JAX_FILE(TEST_IP+'board_upload', 'POST', null, output);
         $.when(send_ajax).done(function() {
-            location.reload();
-        })
+            let send_json = send_ajax.responseJSON;
+            if (send_json['result'] == 'success'){
+                snackbar("메뉴를 설정하였습니다.");
+                location.reload();
+            } else {
+                snackbar("일시적인 오류로 메뉴를 적용하지 못하였습니다.");
+            }
+        });
     });
 }
 
-
+var selected_tags_cnt = 0;
 let selected_tags = [];
 function select_tag(target) {
     if (target.hasClass('M_tag_nav'))
@@ -176,11 +187,17 @@ function select_tag(target) {
         target.removeClass('M_tag_nav');
         let index = selected_tags.indexOf(target[0].innerText);
         selected_tags.splice(index, 1);
+        selected_tags_cnt -= 1;
     }
     else 
     {
+        if (selected_tags_cnt == 2){
+            snackbar("태그는 최대 2개만 선택 가능합니다.");
+            return;
+        }
         target.addClass('M_tag_nav');
         selected_tags.push(target[0].innerText);
+        selected_tags_cnt += 1;
     }
 }
 

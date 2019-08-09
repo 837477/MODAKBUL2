@@ -686,7 +686,7 @@ def insert_tag(db, tag):
 #태그 중복 확인
 def check_tag(db, tag):
 	with db.cursor() as cursor:
-		sql = "SELECT COUNT(*) AS result FROM tag WHERE tag_id=%s;"
+		sql = "SELECT * FROM tag WHERE tag_id=%s;"
 		cursor.execute(sql, (tag,))
 		result = cursor.fetchone()
 	return result

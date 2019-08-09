@@ -16,7 +16,7 @@ $(document).ready(()=>{
        });
        $('#M_union_name').attr('placeholder', name[0].value);
        $('#M_union_subtitle').attr('placeholder', subtitle[0].value);
-       $('#M_image_preview').attr('src', '../static/image/'+image[0].value);
+       //$('#M_image_preview').attr('src', '../static/image/'+image[0].value);
    });
    let filter = "win16|win32|win64|mac|macintel";
     if ( navigator.platform ) { //mobile
@@ -302,6 +302,16 @@ function accept_modify_tag(tag) {
                     )
                 }
             });
+            let tag_input_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
+            $.when(tag_input_ajax).done(function() {
+                for (let i=0; i<tag_input_ajax.responseJSON.tags.length; i++)
+                {
+                    $('.M_nav_add').append('<div onclick="select_tag($(this))" class="M_nav_tag"># ' + tag_ajax.responseJSON.tags[i] + '</div>')
+                }
+            });
+
+        } else if (json['result'] == 'already tag'){
+            snackbar("사용할 수 없는 태그입니다.");
         } else if (json['result'] == 'do not use special characters'){
             snackbar("특수기호는 사용할 수 없습니다.");
         }
@@ -341,6 +351,13 @@ function delete_modify_tag(tag) {
                     )
                 }
             });
+            let tag_input_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
+                $.when(tag_input_ajax).done(function() {
+                    for (let i=0; i<tag_input_ajax.responseJSON.tags.length; i++)
+                    {
+                        $('.M_nav_add').append('<div onclick="select_tag($(this))" class="M_nav_tag"># ' + tag_ajax.responseJSON.tags[i] + '</div>')
+                    }
+                });
         } else {
             snackbar("태그 삭제에 실패하였습니다.");
         }
@@ -395,7 +412,6 @@ function plus_tag_append(tag) {
         let a_jax = A_JAX_FILE(TEST_IP+'input_tag', "POST", null, send_data);
         $.when(a_jax).done(function(){
             let json = a_jax.responseJSON;
-            console.log(json);
             if (json['result'] == 'success'){
                 snackbar("태그가 추가되었습니다.");
                 $('.M_tag_list').empty();
@@ -414,6 +430,15 @@ function plus_tag_append(tag) {
                         )
                     }
                 });
+                let tag_input_ajax = A_JAX(TEST_IP+'get_access_tags', 'GET', null, null);
+                $.when(tag_input_ajax).done(function() {
+                    for (let i=0; i<tag_input_ajax.responseJSON.tags.length; i++)
+                    {
+                        $('.M_nav_add').append('<div onclick="select_tag($(this))" class="M_nav_tag"># ' + tag_ajax.responseJSON.tags[i] + '</div>')
+                    }
+                });
+            } else if (json['result'] == 'already tag'){
+                snackbar("사용할 수 없는 태그입니다.");
             } else {
                 snackbar("태그 추가에 실패하였습니다.");
             }
@@ -433,10 +458,10 @@ let image;
 function image_preview(input) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();
-
+        /*
         reader.onload = function(e) {
             $('#M_image_preview').attr('src', e.target.result);
-        };
+        };*/
         reader.readAsDataURL(input.files[0]);
         image = input.files;
     }
@@ -465,11 +490,12 @@ let subtitle_updated = false;
 let main_bio_updated = false;
 let contacts_updated = false;
 
+/*
 $('#M_logo_upload').change(function () {
    image_preview(this);
    image_updated = true;
 });
-
+*/
 $('#M_union_name').change(()=>{
     name_updated = true;
 });

@@ -1,6 +1,7 @@
 from flask import *
 from werkzeug import *
 from flask_jwt_extended import *
+from PIL import Image
 from db_func import *
 import re
 from word_filter import *
@@ -10,7 +11,7 @@ BP = Blueprint('admin', __name__)
 UPLOAD_IMG_PATH = "/static/image/"
 IMG_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
 
-ACCESS_DENIED_TAG = {'ADMIN', '갤러리', '공모전', '공지', '블랙리스트', '비밀글', '대외활동', '외부사이트', '장부', '취업', '학생회소개'}
+ACCESS_DENIED_TAG = {'ADMIN', '갤러리', '공모전', '공지', '블랙리스트', '비밀글', '대외활동', '외부사이트', '취업', '학생회소개'}
 ACCESS_DENIED_BOARD = ['공지', '갤러리', '학생회소개', '통계', '대외활동', '대외활동_공모전', '대외활동_취업', '투표', '장부']
 #######################################################
 #페이지 URL#############################################
@@ -183,7 +184,7 @@ def variable_update():
 #학생회 로고 변경 (로고는 이미지를 받아야하니 정적변수 수정을 따로 구현) (OK)
 @BP.route('/change_logo', methods=['POST'])
 @jwt_required
-def change_logp():
+def change_logo():
 	user = select_user(g.db, get_jwt_identity())
 	if user is None: abort(400)
 
@@ -200,18 +201,13 @@ def change_logp():
 	#확장자 및 파일이름길이 확인.
 	if secure_filename(img.filename).split('.')[-1] in IMG_EXTENSIONS and len(img.filename) < 240:
 
-		#파일이름 변경.
-		img_name = str(datetime.today().strftime("%Y%m%d%H%M%S%f")) + '_Modakbullogo_' + img.filename
+		#전에 저장되어있던 로고 이미지는 이름을 변경하여 보존, 새로운 로고사진으로 대체.
+		before_img = Image.open('.' + UPLOAD_IMG_PATH + 'modakbulLOGO.png')
+		change_img_name = str(datetime.today().strftime("%Y%m%d%H%M%S%f") + 'modakbulLOGO.png')
+		before_img.save('.' + UPLOAD_IMG_PATH + change_img_name)
 
-		#변경된 파일이름 학생회 로고 변수에 저장.
-		result = update_variable(g.db, "학생회로고", img_name)
+		img.save('.' + UPLOAD_IMG_PATH + 'modakbulLOGO.png')
 
-		#디비 저장 성공이면,
-		if result == "success":
-			#파일 저장
-			img.save('.' + UPLOAD_IMG_PATH + img_name)
-		else:
-			return jsonify(result = "file save fail")
 	else:
 		return jsonify(result = "wrong extension")
 
@@ -398,7 +394,7 @@ def input_tag():
 		return jsonify(result = "do not use special characters")
 
 	#해당 태그가 DB에 없으면?
-	if check_tag(g.db, tag) is not None:
+	if check_tag(g.db, tag) is None:
 		insert_tag(g.db, tag)
 		result = "success"
 	else:

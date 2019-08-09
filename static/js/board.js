@@ -11,12 +11,12 @@ $(window).ready(function() {
                 let tags = '';
                 if (ajax_board.responseJSON.board.board_url.split('_')[1] === undefined)
                 {
-                    tags = '<h5 class="M_board_tag_title"> # ' + ajax_board.responseJSON.board.board_name + '</h5>';
+                    tags = '<h5 class="M_board_tag_title"> # ' + ajax_board.responseJSON.board.board_url + '</h5>';
                 }
                 else
                 {
                     let tag1 = ajax_board.responseJSON.board.board_url.split('_')[0];
-                    let tag2 = ajax_board.responseJSON.board.board_name;
+                    let tag2 = ajax_board.responseJSON.board.board_url.split('_')[1];
                     tags = '<h5 class="M_board_tag_title"> # ' + tag1 + ' # ' + tag2 + '</h5>';
                 }
                 $('.M_board_tag_container').append(tags);

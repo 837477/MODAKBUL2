@@ -1,2 +1,2 @@
 var TEST_IP = "/";
-var DOMAIN = "837477.iptime.org"
+var DOMAIN = window.location.hostname;

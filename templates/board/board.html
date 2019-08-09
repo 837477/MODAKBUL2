@@ -45,7 +45,7 @@
 			<!--nav bar 메인 로고-->
 			<div id="logo_change_target_logo" class="M_nav_bar_logo_container display_none_important" onclick="location.href='/'" onmouseenter="EE_change_logo_to_fire($(this))" onmouseleave="EE_return_logo()">
 				<div class="M_nav_bar_logo_image">
-					<img id="M_nav_bar_logo_image_img" src="#" class="M_nav_bar_logo_image_img">
+					<img id="M_nav_bar_logo_image_img" src="/static/image/modakbulLOGO.png" class="M_nav_bar_logo_image_img">
 				</div>
 			</div>
         	<a id="logo_change_target_fire" class="fir_all_contain display_none_important" href="/" onmouseenter="EE_chage_logo_to_logo($(this))"  onmouseleave="EE_return_logo()">
@@ -165,7 +165,7 @@
 			<div class="M_post_body_line"></div>
 			<div id="comment_target">
 			</div>
-			<div class="M_comment_bottom_empty"></div>
+			<div id="M_comment_bottom_empty" class="M_comment_bottom_empty"></div>
 		</div>
 		<div id="M_post_user_comment_container" class="M_post_user_comment_container_fixed">
 			<div id="M_post_user_comment_anony_container" class="M_post_user_comment_anony_container">
@@ -175,7 +175,10 @@
 					<span class="CB_slider_comment CB_round_comment"></span>
 				</label>
 			</div>
-			<input type="text" id="M_post_user_comment_input" class="M_post_user_comment_input" placeholder="입력 후 엔터를 처주세요!" onkeyup="comment_enter()" autocomplete="off">
+			<textarea id="M_post_user_comment_input" class="M_post_user_comment_input" placeholder="댓글을 입력해주세요!" onkeyup="comment_enter()" autocomplete="off"></textarea>
+			<div class="M_post_user_comment_send" onclick="comment_send()">
+				<i class="far fa-paper-plane"></i>
+			</div>
 		</div>
 	</div>
 	<!--menu control button-->
