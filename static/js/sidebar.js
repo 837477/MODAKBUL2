@@ -1,6 +1,8 @@
 $(window).ready(function () {
+    $('#M_loading_modal_background').removeClass('display_none');
     let a_jax = A_JAX(TEST_IP+'get_boards', 'GET', null, null);
     $.when(a_jax).done(function () {
+        $('#M_loading_modal_background').addClass('display_none');
         let result_html = '<ul id="gn-menu2" class="gn-menu">';
         let data = a_jax.responseJSON.boards;
         let result_list = [];
@@ -105,6 +107,7 @@ $(window).ready(function () {
                 snackbar("일시적인 오류로 정보를 불러오지 못하였습니다.");
             }
         });
+        $('#M_loading_modal_background').addClass('display_none');
     });
 });
 

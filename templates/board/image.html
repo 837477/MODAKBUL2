@@ -145,6 +145,11 @@
 			</main>
 		</div>
 	</div>
+	<div id="M_loading_modal_background" class="M_loading_modal_background wow animated" data-wow-duration = "0.4s">
+		<div class="M_loading_modal_content1"></div>
+		<div class="M_loading_modal_content2"></div>
+		<div class="M_loading_modal_content_p">잠시만 기다려주세요</div>
+	</div>
 	<!--Post modal-->
 	<div id="M_user_post_modal_background" class="M_user_post_modal_background animated wow display_none" data-wow-duration = "0.4s">
 		<div id="M_user_post_modal_container" class="M_info_div M_user_post_modal_container animated wow M_boxshadow display_none" data-wow-duration = "0.4s">
@@ -223,7 +228,7 @@
 			<h4 class="M_post_fixed_title">내용</h4>
 			<div id="summernote"></div>
 			<div class="M_filebox">
-				<label for="files_upload" class="M_filebox">업로드</label> <span id="M_postupload_waring_span_pc" class="display_none">10개까지 등록할 수 있습니다.</span> <span id="M_postupload_waring_span_mobile" class="display_none">모바일은 1개만 업로드 가능합니다.</span>
+				<label for="files_upload" class="M_filebox">업로드</label> <span id="M_postupload_waring_span_pc" class="display_none">10개까지 등록할 수 있습니다.</span> <span id="M_postupload_waring_span_mobile" class="display_none">10개까지 등록할 수 있습니다.</span>
 				<input type="file" id="files_upload" multiple="multiple" class="M_post_fixed_attachment" max-10 maxlength="10" data-maxsize="50000000" onchange="javascript:document.getElementById('M_file_route').value=this.value">
 				<div id="M_file_route" class="M_file_route">
 				</div>
@@ -297,7 +302,7 @@
 <script src="/static/js/sidebar.js"></script>
 <script src="/static/js/postmodal.js"></script>
 <script src="/static/js/historyback.js"></script>
-<script src="/static/js/navigation.js"></script>
+<script src="/static/js/check_action.js"></script>
 <script>
 	M_summernote_change();
 	$(document).ready(function() {

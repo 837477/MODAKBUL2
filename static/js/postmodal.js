@@ -16,6 +16,7 @@ function postpage_open(get_post_href, get_post_id){
 }
 
 function postmodal_open(get_post_id){
+	//$('#M_post_user_comment_container').width($('#M_user_post_modal_container').width());
 	let searchParams = new URLSearchParams(window.location.search);
 	let request_board = searchParams.get('type');
 	is_post_like = 0;
@@ -70,8 +71,9 @@ function postmodal_close(is_secret = null){
 $(document).mouseup(function (e) {
 	if (is_postmodal_open == 1 && is_image_modal_open == 0){
 		var container = $("#M_user_post_modal_container");
+		let loading = $('#M_loading_modal_background');
 		var control_button = $('#ss_menu');
-		if (!container.is(e.target) && container.has(e.target).length === 0 && !control_button.is(e.target) && control_button.has(e.target).length === 0 && !$('#M_post_user_comment_container').is(e.target) && $('#M_post_user_comment_container').has(e.target).length === 0){
+		if (!container.is(e.target) && container.has(e.target).length === 0 && !control_button.is(e.target) && control_button.has(e.target).length === 0 && !$('#M_post_user_comment_container').is(e.target) && $('#M_post_user_comment_container').has(e.target).length === 0 && !loading.is(e.target) && loading.has(e.target).length === 0 ){
 			postmodal_close();
 		}
 	}
@@ -131,6 +133,10 @@ slider2.addEventListener('mousemove', (e) => {
   slider2.scrollLeft = scrollLeft2 - walk2;
 });
 
+$('#M_post_user_comment_anony').click(function(){
+	$('#M_post_user_comment_input').focus();
+});
+
 
 function comment_enter() {
 	if (window.event.keyCode == 13) {
@@ -156,6 +162,7 @@ function comment_enter() {
 		send_data.append('comment', $("#M_post_user_comment_input").val());
 		send_data.append('anony', is_anony);
 		send_data.append('comment_id', is_double_comment*1);
+		$('#M_loading_modal_background').removeClass('display_none');
 		a_jax = A_JAX_FILE(TEST_IP+"comment_upload", "POST", token, send_data);
 		$.when(a_jax).done(function(){
 			var json = a_jax.responseJSON;
@@ -163,6 +170,7 @@ function comment_enter() {
 				var a_jax_user = A_JAX(TEST_IP+"get_userinfo", "GET", token, null);
 				$.when(a_jax_user).done(function(){
 					json = a_jax_user.responseJSON;
+					$('#M_loading_modal_background').addClass('display_none');
 					if (json['result'] == "success"){
 						$("#M_post_user_comment_input").blur();
 						user_comments_id = [];
@@ -179,12 +187,15 @@ function comment_enter() {
 				});
 			}
 			else if (json['result'] == "unavailable word"){
+				$('#M_loading_modal_background').addClass('display_none');
     	  		snackbar("내용에 욕설이 들어가있습니다.");
     	  	}
 			else if (json['result'] == "bad request"){
+				$('#M_loading_modal_background').addClass('display_none');
 				snackbar("다시 로그인해주세요.");
 			}
 			else {
+				$('#M_loading_modal_background').addClass('display_none');
 				snackbar("일시적인 오류로 정보를 보내지 못하였습니다.");
 			}
 		});
@@ -217,12 +228,14 @@ function comment_send() {
 	send_data.append('comment', $("#M_post_user_comment_input").val());
 	send_data.append('anony', is_anony);
 	send_data.append('comment_id', is_double_comment*1);
+	$('#M_loading_modal_background').removeClass('display_none');
 	a_jax = A_JAX_FILE(TEST_IP+"comment_upload", "POST", token, send_data);
 	$.when(a_jax).done(function(){
 		var json = a_jax.responseJSON;
 		if (json['result'] == "success"){
 			var a_jax_user = A_JAX(TEST_IP+"get_userinfo", "GET", token, null);
 			$.when(a_jax_user).done(function(){
+				$('#M_loading_modal_background').addClass('display_none');
 				json = a_jax_user.responseJSON;
 				if (json['result'] == "success"){
 					$("#M_post_user_comment_input").blur();
@@ -240,12 +253,15 @@ function comment_send() {
 			});
 		}
 		else if (json['result'] == "unavailable word"){
+			$('#M_loading_modal_background').addClass('display_none');
       		snackbar("내용에 욕설이 들어가있습니다.");
       	}
 		else if (json['result'] == "bad request"){
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar("다시 로그인해주세요.");
 		}
 		else {
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar("일시적인 오류로 정보를 보내지 못하였습니다.");
 		}
 	});
@@ -269,6 +285,7 @@ $(document).keydown(function(event){
 				}
 			}
 			if (search_bar_value == 1){
+				console.log("27");
 				search_bar_value = 0;
 				var container = $("#M_search_bar");
 				var search_bar = $("#M_search_bar");
@@ -468,36 +485,71 @@ function empty_post_info(){
 
 
 //다른곳클릭하면 double comment 취소
-$(document).mouseup(function (e) {
-	if (comment_double_check == 1){
-		let container = $("#M_post_user_comment_container");
-		if (!container.is(e.target) && container.has(e.target).length === 0){
-			let comment_id = $('#M_post_user_comment_input').attr('alt');
-			$('#M_post_user_comment_input').removeAttr("alt");
-			comment_double_check = 0;
-			$('div[alt=comment_'+comment_id+']').removeAttr('style');
-			$('div[alt=comment_'+comment_id+']').removeClass("comment_check");
-		}
+if ( navigator.platform ) { //mobile
+	if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
+		$(document).bind("touchend", function (e) {
+			let mobile_seletor = navigator.platform.toLowerCase();
+			if (comment_double_check == 1){
+				let container = $("#M_post_user_comment_container");
+				if (!container.is(e.target) && container.has(e.target).length === 0){
+					let comment_id = $('#M_post_user_comment_input').attr('alt');
+					$('#M_post_user_comment_input').removeAttr("alt");
+					comment_double_check = 0;
+					$('div[alt=comment_'+comment_id+']').removeAttr('style');
+					$('div[alt=comment_'+comment_id+']').removeClass("comment_check");
+					$('#M_post_user_comment_input').blur();
+					if (mobile_seletor.indexOf("iphone")>-1||mobile_seletor.indexOf("ipad")>-1||mobile_seletor.indexOf("ipod")>-1){
+					} else {
+						$('#M_comment_bottom_empty').animate({'height': '50px'}, 400);
+					}
+				}
+			} else {
+				let container = $("#M_post_user_comment_container");
+				if (!container.is(e.target) && container.has(e.target).length === 0){
+					$('#M_post_user_comment_input').blur();
+					if (mobile_seletor.indexOf("iphone")>-1||mobile_seletor.indexOf("ipad")>-1||mobile_seletor.indexOf("ipod")>-1){
+					} else {
+						$('#M_comment_bottom_empty').animate({'height': '50px'}, 400);
+					}
+				}
+			}
+		});
+	} else {	//pc
+		$(document).mouseup(function (e) {
+			if (comment_double_check == 1){
+				let container = $("#M_post_user_comment_container");
+				if (!container.is(e.target) && container.has(e.target).length === 0){
+					let comment_id = $('#M_post_user_comment_input').attr('alt');
+					$('#M_post_user_comment_input').removeAttr("alt");
+					comment_double_check = 0;
+					$('div[alt=comment_'+comment_id+']').removeAttr('style');
+					$('div[alt=comment_'+comment_id+']').removeClass("comment_check");
+				}
+			}
+		});
 	}
-});
+}
 
 // 모바일 pc 구분
 if ( navigator.platform ) { //mobile
 	if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
 		$('#M_post_user_comment_input').focus(function() {
-			$('#M_comment_bottom_empty').height('60%');
+			//$('#M_user_post_modal_container').animate({scrollTop : $('body').prop('scrollHeight')}, 400);
 			let mobile_seletor = navigator.platform.toLowerCase();
 			//IOS
 			if (mobile_seletor.indexOf("iphone")>-1||mobile_seletor.indexOf("ipad")>-1||mobile_seletor.indexOf("ipod")>-1){
 				$('#M_user_post_modal_container').animate({scrollTop : $('#M_user_post_modal_container').height() + $('#M_user_post_modal_container').height()/100*68}, 400);
 			} else {	//ANDROID
+				$('#M_comment_bottom_empty').height('60%');
 				$('#M_post_user_comment_container').css("position", "fixed");
 				$('#M_post_user_comment_container').css("padding", "5px 5px 5px 5px");
 			}
 		});
 		$('#M_post_user_comment_input').blur(function() {
-			$('#M_comment_bottom_empty').height('200px');
+			$('#M_comment_bottom_empty').height('50px');
 		});
+	} else {
+
 	}
 }
 
@@ -548,6 +600,7 @@ function post_like_button() {
 
 
 function comment_trash_button(comment_id) {
+	$('#M_loading_modal_background').removeClass('display_none');
 	if (localStorage.getItem('modakbul_token') == null){
 		snackbar('잘못된 접근입니다.');
 		return;
@@ -558,13 +611,16 @@ function comment_trash_button(comment_id) {
 			$.when(a_jax).done(function(){
 				json = a_jax.responseJSON;
 				if (json['result'] == 'success'){
+					$('#M_loading_modal_background').addClass('display_none');
 					snackbar("댓글을 삭제하였습니다.");
 					empty_post_info();
 					let get_post_id =$('#M_user_post_modal_container').attr('alt').split('_')[1]*1;
 					get_post_info(get_post_id);
 				} else if (json['result'] == 'bad request'){
+					$('#M_loading_modal_background').addClass('display_none');
 					snackbar("권한이 없습니다.");
 				} else {
+					$('#M_loading_modal_background').addClass('display_none');
 					snackbar("잘못된 접근입니다.");
 				}
 			});
@@ -575,17 +631,21 @@ function comment_trash_button(comment_id) {
 			$.when(a_jax).done(function(){
 				json = a_jax.responseJSON;
 				if (json['result'] == 'success'){
+					$('#M_loading_modal_background').addClass('display_none');
 					snackbar("댓글을 삭제하였습니다.");
 					empty_post_info();
 					let get_post_id =$('#M_user_post_modal_container').attr('alt').split('_')[1]*1;
 					get_post_info(get_post_id);
 				} else if (json['result'] == 'bad request'){
+					$('#M_loading_modal_background').addClass('display_none');
 					snackbar("권한이 없습니다.");
 				} else {
+					$('#M_loading_modal_background').addClass('display_none');
 					snackbar("잘못된 접근입니다.");
 				}
 			});
 		} else {
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar('잘못된 접근입니다.');
 			return;
 		}
@@ -627,8 +687,20 @@ function attachment_donwload(file){
 	document.body.removeChild(element);
 }
 
-//클립보드 복사 함수
+//클립보드 복사 함수 selector
 function clipboardCopy(tag) {
+var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
+	if (varUA.match('android') != null) { 
+	    clipboardCopyAndroid(tag);	//Android clipboard copy function
+	} else if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) { 
+	    clipboardCopyIOS(tag);		//IOS clipboard copy function
+	} else {
+	    clipboardCopyAndroid(tag);	//Another device clipboard copy function
+	}
+}
+
+//Android 클립보드 복사 함수
+function clipboardCopyAndroid(tag) {
 	let post_id = tag.getAttribute('alt');
 	var clipboard_textarea = document.createElement('textarea');
 	clipboard_textarea.setAttribute('id', 'clipboard_copy');
@@ -640,6 +712,20 @@ function clipboardCopy(tag) {
 	document.getElementById('clipboard_copy').blur();
 	snackbar("URL 복사완료!");
 	$('textarea').remove('#clipboard_copy');
+}
+
+//IOS 클립보드 복사 함수
+function clipboardCopyIOS(tag) {
+	let post_id = tag.getAttribute('alt');
+	var clipboard_textarea = document.createElement('textarea');
+	clipboard_textarea.value = DOMAIN+TEST_IP+"v#"+post_id;
+	clipboard_textarea.style.zIndex = "-3000";
+	document.body.appendChild(clipboard_textarea);
+	clipboard_textarea.select();
+	clipboard_textarea.setSelectionRange(0, 9999);  // 추가
+	document.execCommand('copy');
+	snackbar("URL 복사완료!");
+	document.body.removeChild(clipboard_textarea);
 }
 
 //포스트 작성 함수
@@ -716,6 +802,12 @@ function post_modify() {
 
 //포스트 삭제 함수
 function post_delete() {
+	let delete_choice = confirm("포스트를 삭제하시겠습니까?");
+	if(delete_choice){
+	}else{
+		return;
+	}
+	$('#M_loading_modal_background').removeClass('display_none');
 	let post_id = $('#M_user_post_modal_container').attr('alt').split('_')[1]*1;
 	let token = localStorage.getItem('modakbul_token');
 	if (token != null){
@@ -723,16 +815,20 @@ function post_delete() {
 		$.when(a_jax).done(function(){
 			let json = a_jax.responseJSON;
 			if (json['result'] == "success"){
+				$('#M_loading_modal_background').addClass('display_none');
 				snackbar("포스트 삭제를 성공하였습니다.");
 				postmodal_close(1);
 				location.reload();
 			} else if (json['result'] == "do not access") {
+				$('#M_loading_modal_background').addClass('display_none');
 				snackbar("권한이 없습니다.");
 			} else {
+				$('#M_loading_modal_background').addClass('display_none');
 				snackbar("포스트 삭제를 실패하였습니다.");
 			}
 		});
 	} else {
+		$('#M_loading_modal_background').addClass('display_none');
 		snackbar("권한이 없습니다.");
 	}
 }
@@ -770,7 +866,9 @@ $(function(){
 */
 
 function post_write_accept() {
+	$('#M_loading_modal_background').removeClass('display_none');
 	if ($('#M_post_fixed_title_input').val() == ""){
+		$('#M_loading_modal_background').addClass('display_none');
 		snackbar("제목을 입력해주세요.");
 		return;
 	}
@@ -784,6 +882,7 @@ function post_write_accept() {
 	for (let i = 0; i < M_files.length; i++) {
 		M_files_size += M_files[i].size;
 		if (M_files_size > file_max_size){
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar("파일 용량을 초과하였습니다.");
 			return;
 		}
@@ -802,6 +901,7 @@ function post_write_accept() {
 		send_data.append("title", $('#M_post_fixed_title_input').val());
 		send_data.append("content", content);
 		if (content.length >= 50000){
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar("작성 범위를 초과하였습니다.");
 			return;
 		}
@@ -815,6 +915,7 @@ function post_write_accept() {
 		}
 		let a_jax = A_JAX_FILE(TEST_IP+"post_upload", "POST", token, send_data);
 		$.when(a_jax).done(function(){
+			$('#M_loading_modal_background').addClass('display_none');
 			let json = a_jax.responseJSON;
 			if (json['result'] == "success"){
 				snackbar("게시글을 성공적으로 업로드하였습니다.");
@@ -857,6 +958,7 @@ function post_write_accept() {
 		send_data.append("title", $('#M_post_fixed_title_input').val());
 		send_data.append("content", content);
 		if (content.length >= 50000){
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar("작성 범위를 초과하였습니다.")
 			return;
 		}
@@ -867,6 +969,7 @@ function post_write_accept() {
 		}
 		let a_jax = A_JAX_FILE(TEST_IP+"post_update", "POST", token, send_data);
 		$.when(a_jax).done(function(){
+			$('#M_loading_modal_background').addClass('display_none');
 			let json = a_jax.responseJSON;
 			if (json['result'] == "success"){
 				snackbar("게실글을 성공적으로 업로드하였습니다.");

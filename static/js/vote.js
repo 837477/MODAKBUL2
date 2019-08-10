@@ -12,6 +12,7 @@ function postmodal_open(get_post_id){
 		snackbar("로그인해주세요.");
 		return;
 	}
+	$('#M_loading_modal_background').removeClass('display_none');
 	get_post_info(get_post_id);
 	$('#M_menu_button_modify').removeClass('display_none_important');
 	$('#M_menu_button_trash').removeClass('display_none_important');
@@ -64,7 +65,8 @@ $(document).mouseup(function (e) {
 	if (is_postmodal_open == 1 && is_image_modal_open == 0){
 		var container = $("#M_user_post_modal_container");
 		var control_button = $('#ss_menu');
-		if (!container.is(e.target) && container.has(e.target).length === 0 && !control_button.is(e.target) && control_button.has(e.target).length === 0 && !$('#M_post_user_comment_container').is(e.target) && $('#M_post_user_comment_container').has(e.target).length === 0){
+		let loading = $('M_loading_modal_background');
+		if (!container.is(e.target) && container.has(e.target).length === 0 && !control_button.is(e.target) && control_button.has(e.target).length === 0 && !$('#M_post_user_comment_container').is(e.target) && $('#M_post_user_comment_container').has(e.target).length === 0 && !loading.is(e.target) && loading.has(e.target).length === 0){
 			postmodal_close();
 		}
 	}
@@ -98,6 +100,7 @@ $(document).keydown(function(event){
 });
 //포스트 정보 가져오는 함수
 function get_post_info(get_post_id) {
+	$('#M_loading_modal_background').removeClass('display_none');
 	let token = localStorage.getItem('modakbul_token');
 	var a_jax = A_JAX(TEST_IP+"get_vote/"+get_post_id, "GET", token, null);
 	$.when(a_jax).done(function(){
@@ -195,8 +198,10 @@ function get_post_info(get_post_id) {
 				}
 			}
 			vote_init_finally();
+			$('#M_loading_modal_background').addClass('display_none');
 		}
 		else {
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar("일시적인 오류로 정보를 가져오지 못하였습니다.");
 		}
 	});
@@ -226,7 +231,7 @@ if ( navigator.platform ) { //mobile
 				$('#M_user_post_modal_container').animate({scrollTop : $('#M_user_post_modal_container').height() + $('#M_user_post_modal_container').height()/100*68}, 400);
 			} else {	//ANDROID
 				$('#M_post_user_comment_container').css("position", "fixed");
-				$('#M_post_user_comment_container').css("padding", "10px 10px 0px 10px");
+				$('#M_post_user_comment_container').css("padding", "5px 5px 0px 5px");
 			}
 		});
 		$('#M_post_user_comment_input').blur(function() {
@@ -297,11 +302,18 @@ function post_modify() {
 
 //포스트 삭제 함수
 function post_delete() {
+	let delete_choice = confirm("설문조사를 삭제하시겠습니까?");
+	if(delete_choice){
+	}else{
+		return;
+	}
+	$('#M_loading_modal_background').removeClass('display_none');
 	let post_id = $('#M_user_post_modal_container').attr('alt').split('_')[1]*1;
 	let token = localStorage.getItem('modakbul_token');
 	if (token != null){
 		let a_jax = A_JAX(TEST_IP+'vote_delete/'+post_id, "GET", token, null);
 		$.when(a_jax).done(function(){
+			$('#M_loading_modal_background').addClass('display_none');
 			let json = a_jax.responseJSON;
 			if (json['result'] == "success"){
 				snackbar("설문조사 삭제를 성공하였습니다.");
@@ -314,6 +326,7 @@ function post_delete() {
 			}
 		});
 	} else {
+		$('#M_loading_modal_background').addClass('display_none');
 		snackbar("권한이 없습니다.");
 	}
 }
@@ -409,9 +422,10 @@ function post_write_accept() {
 
 	send_data.append('vote', JSON.stringify(vote));
 	send_data.append('file', M_file);
-
+	$('#M_loading_modal_background').removeClass('display_none');
 	let a_jax = A_JAX_FILE(TEST_IP+"vote_upload", "POST", token, send_data);
 	$.when(a_jax).done(function(){
+		$('#M_loading_modal_background').addClass('display_none');
 		let json = a_jax.responseJSON;
 		if (json['result'] == "success"){
 			snackbar("설문조사를 성공적으로 업로드하였습니다.");
@@ -526,9 +540,10 @@ function vote_send() {
 
 	let output = new FormData();
 	output.append('answer', JSON.stringify(send_data));
-
+	$('#M_loading_modal_background').removeClass('display_none');
 	let a_jax = A_JAX_FILE(TEST_IP+"vote_answer", "POST", token, output);
 	$.when(a_jax).done(function(){
+		$('#M_loading_modal_background').addClass('display_none');
 		let json = a_jax.responseJSON;
 		if (json['result'] == 'success'){
 			snackbar("설문조사 완료!");
@@ -613,12 +628,12 @@ $("input[type=file]").change(function () {
     let file;
     let string = "";
     if (files.length > 1){
-    	alert("사진 개수는 하나만 올려주세요!");
+    	snackbar("사진 개수는 하나만 올려주세요!");
     	$('#files_upload').val('');
     	return;
     }
    	if (jQuery.inArray(files[0]['name'].split(".")[(files[0]['name'].split(".").length-1)], img_set) == -1){
-   		alert("사진 파일만 올려주세요!");
+   		snackbar("사진 파일만 올려주세요!");
    		$('#files_upload').val('');
    		return;
    	}

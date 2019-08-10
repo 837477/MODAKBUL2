@@ -546,58 +546,61 @@ function search_vote_analysistics(tag) {
 }
 //설문조사 리스트 반환 함수
 function search_vote_analysistics_list() {
+    $('#M_loading_modal_background').removeClass('display_none');
     let a_jax = A_JAX(TEST_IP+'get_vote_status', 'GET', null, null);
     $.when(a_jax).done(function () {
         let json = a_jax.responseJSON;
         if (json['result'] == 'success'){
             let div_class = 'M_info_div M_board_content M_boxshadow wow flipInX';
-                if (localStorage.getItem('modakbul_theme') === 'dark') {
-                    div_class +=  ' M_boxshadow_dark_shadow" style="' +
-                        'visibility: visible; background-color: rgb(73, 78, 82); color: rgb(245, 246, 250); border: 0px solid rgb(221, 221, 221);';
-                }
-                let undone_list = json['undone_vote'];
-                for (let i=0; i<undone_list.length; i++) {
-                    let data = undone_list[i];
-                    let start_time = data['start_date'];
-                    let end_time = data['end_date'];
-                    let title = data['vote_title'];
-                    let vote_id = data['vote_id'];
-                    let views = data['join_cnt'];
-                    let undone_div_class = ' M_statistics_undone_vote ' + div_class;
-                    $("#M_statistics_vote_list_target")
-                        .append(
-                            '<div class="' + undone_div_class + '" onclick="votemodal_open('+ vote_id +')"  alt="vote_'+ vote_id +'">' +
-                            '<div class="M_vote_date_title">기간 : </div>' +
-                            '<div class="M_time_info">'+ start_time + ' ~ </div>' +
-                            '<div class="M_time_info">'+ end_time + '</div>' +
-                            '<div class="M_vote_content_info">' + views +'</div>' +
-                            '<i class="fas fa-male M_vote_content_icon"></i>' +
-                            '<div class="M_board_content_title">'+ title +'</div>' +
-                            '</div>');
-                }
-                let done_list = json['done_vote'];
-                for (let i=0; i<done_list.length; i++) {
-                    let data = done_list[i];
-                    let start_time = data['start_date'];
-                    let end_time = data['end_date'];
-                    let title = data['vote_title'];
-                    let vote_id = data['vote_id'];
-                    let views = data['join_cnt'];
-                    let done_div_class = ' M_statistics_done_vote ' + div_class;
-                    $("#M_statistics_vote_list_target")
-                        .append(
-                            '<div class="' + done_div_class + ' M_statistics_done_vote" onclick="votemodal_open('+ vote_id +')" alt="vote_'+ vote_id +'">' +
-                            '<div class="M_vote_date_title">기간 : </div>' +
-                            '<div class="M_time_info">'+ start_time + ' ~ </div>' +
-                            '<div class="M_time_info">'+ end_time + '</div>' +
-                            '<div class="M_vote_content_info">' + views +'</div>' +
-                            '<i class="fas fa-male M_vote_content_icon"></i>' +
-                            '<div class="M_board_content_title">'+ title +'</div>' +
-                            '</div>');
-                }
-                //모든 vote 리스트
-                vote_list_for_search = undone_list.concat(done_list);
+            if (localStorage.getItem('modakbul_theme') === 'dark') {
+                div_class +=  ' M_boxshadow_dark_shadow" style="' +
+                    'visibility: visible; background-color: rgb(73, 78, 82); color: rgb(245, 246, 250); border: 0px solid rgb(221, 221, 221);';
+            }
+            let undone_list = json['undone_vote'];
+            for (let i=0; i<undone_list.length; i++) {
+                let data = undone_list[i];
+                let start_time = data['start_date'];
+                let end_time = data['end_date'];
+                let title = data['vote_title'];
+                let vote_id = data['vote_id'];
+                let views = data['join_cnt'];
+                let undone_div_class = ' M_statistics_undone_vote ' + div_class;
+                $("#M_statistics_vote_list_target")
+                    .append(
+                        '<div class="' + undone_div_class + '" onclick="votemodal_open('+ vote_id +')"  alt="vote_'+ vote_id +'">' +
+                        '<div class="M_vote_date_title">기간 : </div>' +
+                        '<div class="M_time_info">'+ start_time + ' ~ </div>' +
+                        '<div class="M_time_info">'+ end_time + '</div>' +
+                        '<div class="M_vote_content_info">' + views +'</div>' +
+                        '<i class="fas fa-male M_vote_content_icon"></i>' +
+                        '<div class="M_board_content_title">'+ title +'</div>' +
+                        '</div>');
+            }
+            let done_list = json['done_vote'];
+            for (let i=0; i<done_list.length; i++) {
+                let data = done_list[i];
+                let start_time = data['start_date'];
+                let end_time = data['end_date'];
+                let title = data['vote_title'];
+                let vote_id = data['vote_id'];
+                let views = data['join_cnt'];
+                let done_div_class = ' M_statistics_done_vote ' + div_class;
+                $("#M_statistics_vote_list_target")
+                    .append(
+                        '<div class="' + done_div_class + ' M_statistics_done_vote" onclick="votemodal_open('+ vote_id +')" alt="vote_'+ vote_id +'">' +
+                        '<div class="M_vote_date_title">기간 : </div>' +
+                        '<div class="M_time_info">'+ start_time + ' ~ </div>' +
+                        '<div class="M_time_info">'+ end_time + '</div>' +
+                        '<div class="M_vote_content_info">' + views +'</div>' +
+                        '<i class="fas fa-male M_vote_content_icon"></i>' +
+                        '<div class="M_board_content_title">'+ title +'</div>' +
+                        '</div>');
+            }
+            //모든 vote 리스트
+            vote_list_for_search = undone_list.concat(done_list);
+            $('#M_loading_modal_background').addClass('display_none');
         } else {
+            $('#M_loading_modal_background').addClass('display_none');
             snackbar("일시적인 오류로 정보를 가져오지 못하였습니다.");
         }
     });
@@ -655,7 +658,8 @@ function votemodal_close(is_secret = null){
 $(document).mouseup(function (e) {
     if (is_votemodal_open == 1 && is_image_modal_open == 0){
         var container = $("#M_user_vote_modal_container");
-        if (!container.is(e.target) && container.has(e.target).length === 0){
+        let loading = $('#M_loading_modal_background');
+        if (!container.is(e.target) && container.has(e.target).length === 0 && !loading.is(e.target) && loading.has(e.target).length === 0){
             votemodal_close();
         }
     }

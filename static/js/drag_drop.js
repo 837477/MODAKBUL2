@@ -94,7 +94,6 @@ function M_setting_init_data() {
                 }
             }
         }
-
         for (let i=0; i<result_list.length; i++) {
             let board_html = '';
             let delete_icon = '<div onclick="delete_board($(this))" class="M_board_delete_icon"><i class="fas fa-trash-alt"></i></div>';
@@ -159,6 +158,7 @@ $(document).ready(function(){
 
 
 function nav_submit(new_board, delete_board){
+    $('#M_loading_modal_background').removeClass('display_none');
     let final_result = [];
     for (let i=0; i<sortable_list.length; i++){
         if (sortable_list[i].toArray().length != 0) final_result.push(sortable_list[i].toArray());
@@ -197,6 +197,7 @@ function nav_submit(new_board, delete_board){
         output.append('boards', JSON.stringify(send_data));
         let send_ajax = A_JAX_FILE(TEST_IP+'board_upload', 'POST', null, output);
         $.when(send_ajax).done(function() {
+            $('#M_loading_modal_background').addClass('display_none');
             let send_json = send_ajax.responseJSON;
             if (send_json['result'] == 'success'){
                 snackbar("메뉴를 설정하였습니다.");
@@ -253,6 +254,11 @@ function create_board() {
 }
 
 function delete_board(target) {
+    let delete_choice = confirm("게시판을 삭제하시겠습니까?");
+    if(delete_choice){
+    }else{
+        return;
+    }
     let board = send_data.filter(data => {
         return data.board_name === target[0].parentNode.innerText;
     });

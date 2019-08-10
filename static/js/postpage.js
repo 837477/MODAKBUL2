@@ -8,6 +8,7 @@ function postpage_init() {
 }
 //get post info function
 function get_post_info(get_post_id) {
+	$('#M_loading_modal_background').removeClass('display_none');
 	let a_jax = A_JAX(TEST_IP+"get_post/"+get_post_id, "GET", null, null);
 	$.when(a_jax).done(function(){
 		var json = a_jax.responseJSON;
@@ -121,12 +122,15 @@ function get_post_info(get_post_id) {
 					comment_target.append(d_container);
 				}
 			}
+			$('#M_loading_modal_background').addClass('display_none');
 		}
 		else if (json['result'] == 'do not access'){
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar("비밀글입니다.");
 			postmodal_close(1);
 		}
 		else {
+			$('#M_loading_modal_background').addClass('display_none');
 			snackbar("일시적인 오류로 정보를 가져오지 못하였습니다.");
 		}
 	});

@@ -11,10 +11,11 @@ function user_login(){
 		snackbar("아이디 및 비밀번호를 입력해주세요.");
 		return;
 	}
-
+	$('#M_loading_modal_background').removeClass('display_none');
 	var send_data = {id: login_ID, pw: login_PW};
 	var a_jax = A_JAX(TEST_IP+"sign_in_up", "POST", null, send_data);	//"/login" 이라는 url에 아이디/비밀번호 data 전송
 	$.when(a_jax).done(function(){
+		$('#M_loading_modal_background').addClass('display_none');
 		var json = a_jax.responseJSON;
 		if (json['result'] == "you are not sejong"){			// result 값이 "your not Sejong" 이라면 실행
 			snackbar("올바르지 않은 회원 정보입니다.");
@@ -71,8 +72,10 @@ function get_user_info() {
 	var name = $('#M_user_content_name');
 	var major = $('#M_user_content_major');
 	var number = $('#M_user_content_number');
+	$('#M_loading_modal_background').removeClass('display_none');
 	var a_jax = A_JAX(TEST_IP+"get_userinfo", "GET", token, null);
 	$.when(a_jax).done(function(){
+		$('#M_loading_modal_background').addClass('display_none');
 		var json = a_jax.responseJSON;
 		if (json['result'] == "success"){
 			name.empty();

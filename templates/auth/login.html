@@ -145,6 +145,11 @@
 		<img onerror="this.src=\'/static/image/baseprofileimg.png\'" src="../static/image/foot.png" class="M_footer_img">
 		<p class="M_footer_p">010-7393-3434 | sejong1sc@gmail.com | 학생회관 409호<br>COPYRIGHT ⓒ 2019 Team IML</p>
 	</div>
+	<div id="M_loading_modal_background" class="M_loading_modal_background wow animated" data-wow-duration = "0.4s">
+		<div class="M_loading_modal_content1"></div>
+		<div class="M_loading_modal_content2"></div>
+		<div class="M_loading_modal_content_p">잠시만 기다려주세요</div>
+	</div>
 </body>
 
 <!-- JQuery JS -->
@@ -177,7 +182,7 @@
 <script src="../static/js/sidebar.js"></script>
 <script src="../static/js/themeChange.js"></script>
 <script src="../static/js/loginpage_change.js"></script>
-<script src="../static/js/navigation.js"></script>
+<script src="/static/js/check_action.js"></script>
 <script>
 	if (localStorage.getItem('modakbul_token') != null){
 		get_user_info();

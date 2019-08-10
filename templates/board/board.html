@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="ko">
 <head>
 	<title>세종대학교 소프트웨어융합대학</title>
 	<meta name="keywords" content="세종대학교,소프트웨어융합대학,소융대">
@@ -213,7 +213,7 @@
 			<h4 class="M_post_fixed_title">내용</h4>
 			<div id="summernote"></div>
 			<div class="M_filebox">
-				<label for="files_upload" class="M_filebox">업로드</label> <span id="M_postupload_waring_span_pc" class="display_none">10개까지 등록할 수 있습니다.</span> <span id="M_postupload_waring_span_mobile" class="display_none">모바일은 1개만 업로드 가능합니다.</span>
+				<label for="files_upload" class="M_filebox">업로드</label> <span id="M_postupload_waring_span_pc" class="display_none">10개까지 등록할 수 있습니다.</span> <span id="M_postupload_waring_span_mobile" class="display_none">10개까지 등록할 수 있습니다.</span>
 				<input type="file" id="files_upload" multiple="multiple" class="M_post_fixed_attachment" max-10 maxlength="10" data-maxsize="50000000" onchange="javascript:document.getElementById('M_file_route').value=this.value">
 				<div id="M_file_route" class="M_file_route">
 				</div>
@@ -234,6 +234,11 @@
 				<div class="M_user_post_modal_container_fixed_choice" onclick="post_write_accept()" style="border-right: 1px solid #e2e2e2">적용</div>
 				<div class="M_user_post_modal_container_fixed_choice" onclick="post_write_cancel()">취소</div>
 			</div>
+		</div>
+		<div id="M_loading_modal_background" class="M_loading_modal_background wow animated" data-wow-duration = "0.4s">
+			<div class="M_loading_modal_content1"></div>
+			<div class="M_loading_modal_content2"></div>
+			<div class="M_loading_modal_content_p">잠시만 기다려주세요</div>
 		</div>
 	</div>
 </body>
@@ -280,7 +285,7 @@
 <script src="/static/js/sidebar.js"></script>
 <script src="/static/js/postmodal.js"></script>
 <script src="/static/js/historyback.js"></script>
-<script src="/static/js/navigation.js"></script>
+<script src="/static/js/check_action.js"></script>
 <script>
 	M_summernote_change();
 	$(document).ready(function() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 	<title>세종대학교 소프트웨어융합대학</title>
 	<meta name="keywords" content="세종대학교,소프트웨어융합대학,소융대">
@@ -152,7 +152,7 @@
 			</div>
 			<div id="M_post_top_title" class="M_vote_top_title"></div>
 			<div id="M_vote_picture_container" class="M_vote_picture_container">
-				<img id="M_vote_picture" src="#" class="M_vote_pciture" onclick="image_modal_open(this)">
+				<img id="M_vote_picture" src="#" class="M_vote_picture" onclick="image_modal_open(this)">
 			</div>
 			<div id="M_post_body" class="M_vote_body"></div>
 			<div class="M_post_body_line"></div>
@@ -170,6 +170,11 @@
 				<i class="far fa-paper-plane" class="fas fa-share-square"></i>
 			</div>
 			<div class="M_vote_empty_box"></div>
+		</div>
+		<div id="M_loading_modal_background" class="M_loading_modal_background wow animated display_none" data-wow-duration = "0.4s">
+			<div class="M_loading_modal_content1"></div>
+			<div class="M_loading_modal_content2"></div>
+			<div class="M_loading_modal_content_p">잠시만 기다려주세요</div>
 		</div>
 	</div>
 	<!--menu control button-->
@@ -286,5 +291,5 @@
 <script src="/static/js/vote.js"></script>
 <script src="/static/js/historyback.js"></script>
 <script src="/static/js/sidebar.js"></script>
-<script src="/static/js/navigation.js"></script>
+<script src="/static/js/check_action.js"></script>
 </html>
