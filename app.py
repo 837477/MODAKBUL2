@@ -16,7 +16,7 @@ cors = CORS(application)
 application.config.update(
 		DEBUG = True,
 		JWT_SECRET_KEY = 'secret string',
-		MAX_CONTENT_LENGTH = 50 * 1024 * 1024,
+		MAX_CONTENT_LENGTH = 200 * 1024 * 1024,
 	)
 jwt = JWTManager(application)
 
