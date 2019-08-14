@@ -1,6 +1,6 @@
 //라벨, 이름, 시간, 제목, 본문, 조회수, 공감수, 댓글, 첨부파일, 사진, 태그
 var PROTOCOL = "http://";
-var file_max_size = 500 * 1024 * 1024;	// 50MB
+var file_max_size = 200 * 1024 * 1024;	// 50MB
 var filter = "win16|win32|win64|mac|macintel";
 var is_postmodal_open = 0;
 var is_postmodal_fixed_open = 0;
