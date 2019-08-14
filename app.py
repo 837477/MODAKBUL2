@@ -9,7 +9,7 @@ import main, auth, board, vote, search, admin, analysis
 import error
 
 application = Flask(__name__, instance_relative_config=True)
-application.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
+application.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
 cors = CORS(application)
 
 #Debug or Release
