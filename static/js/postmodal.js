@@ -1,6 +1,6 @@
 //라벨, 이름, 시간, 제목, 본문, 조회수, 공감수, 댓글, 첨부파일, 사진, 태그
 var PROTOCOL = "http://";
-var file_max_size = 200 * 1024 * 1024;	// 50MB
+var file_max_size = 500 * 1024 * 1024;	// 50MB
 var filter = "win16|win32|win64|mac|macintel";
 var is_postmodal_open = 0;
 var is_postmodal_fixed_open = 0;
@@ -11,6 +11,7 @@ var img_set = ['png', 'jpg', 'jpeg', 'gif', 'bmp'];
 var file_path = "../static/files/";
 var is_post_modify = 0;
 var is_post_property = 0;
+
 function postpage_open(get_post_href, get_post_id){
 	let a_jax = A_JAX(TEST_IP+"view_up/"+get_post_id, "GET", null, null);
 	window.open(get_post_href, '_blank');

@@ -3121,7 +3121,7 @@ input:checked + .CB_slider_comment:before {
   color: rgba(255,255,255,.1);
   font-size: 150px;
   text-align: center;
-  top: 1750px;
+  top: 1850px;
   font-family: 'Do Hyeon', sans-serif;
   cursor: default;
 }
@@ -3136,7 +3136,7 @@ input:checked + .CB_slider_comment:before {
   }
   .M_credit_title_background3 {
     font-size: 70px;
-    top: 1810px;
+    top: 2010px;
   }
 }
 @keyframes square_spin1 {
