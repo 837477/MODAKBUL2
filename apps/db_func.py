@@ -229,7 +229,7 @@ def select_post(db, post_id):
 #갤러리 포스트 미리보기 반환 (갤러리 전용, 페이지네이션)
 def select_gallery_posts(db, tag_in_post_id, page):
 	with db.cursor() as cursor:
-		sql = 'SELECT post.post_id, post_title FROM post JOIN (' + tag_in_post_id + ') R ON post.post_id = R.post_id LIMIT %s, %s;'
+		sql = 'SELECT post.post_id, post_title, post.post_date FROM post JOIN (' + tag_in_post_id + ') R ON post.post_id = R.post_id ORDER BY post.post_date DESC LIMIT %s, %s;'
 		cursor.execute(sql, ((page-1)*30, page*30))
 		result = cursor.fetchall()
 	return result
